@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 275143023989631226}
   - component: {fileID: 782655001848262615}
   m_Layer: 0
-  m_Name: deep_elf_male
+  m_Name: SPRITE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 1609298388588284447}
   - component: {fileID: 2821987292061257526}
   - component: {fileID: 32571031748047941}
+  - component: {fileID: 4712618005982615676}
   - component: {fileID: 4431058896912651738}
   - component: {fileID: 2747105350717061757}
   m_Layer: 0
@@ -139,7 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da416c8b05c0fd34297e78ce4cb60bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  _weaponPoint: {fileID: 0}
 --- !u!114 &32571031748047941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +154,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemHandler
   _itemPoint: {fileID: 7099628489075388279}
   _item: {fileID: 0}
+--- !u!114 &4712618005982615676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3050347507341463200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7003c07fa15c947b59744a768a1d5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Stats
+  _playerSprites:
+  - {fileID: 21300000, guid: cdbbc9b124cc1ff4a8ea6f5331fa3890, type: 3}
+  - {fileID: 21300000, guid: fa7922262b669724ba7538ec09cc25bc, type: 3}
+  - {fileID: 21300000, guid: 1db01dd860f3b3b43a13f9909f2f635f, type: 3}
+  - {fileID: 21300000, guid: eab9682350b2f4f4f85df6a5d9e93598, type: 3}
+  - {fileID: 21300000, guid: cb12ef90a55956d4b903611f3904571c, type: 3}
+  - {fileID: 21300000, guid: 94b16cd19c88c4248848a1c7ba26704e, type: 3}
+  - {fileID: 21300000, guid: 366a7f85acbcf1d44b2127afb66d7f6a, type: 3}
+  - {fileID: 21300000, guid: 2ab05246f79192e4994f27c3f80b1fe2, type: 3}
+  - {fileID: 21300000, guid: 4d86df27e3156b343badda0196a9f1c3, type: 3}
+  _index: 0
+  _spriteRenderer: {fileID: 782655001848262615}
 --- !u!50 &4431058896912651738
 Rigidbody2D:
   serializedVersion: 5
@@ -180,7 +204,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &2747105350717061757
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

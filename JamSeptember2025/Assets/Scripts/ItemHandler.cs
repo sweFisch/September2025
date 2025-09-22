@@ -5,6 +5,8 @@ public class ItemHandler : MonoBehaviour
     [SerializeField] Transform _itemPoint;
     [SerializeField] Item _item;
 
+
+    
     // Handle input for Items
 
     private void Start()

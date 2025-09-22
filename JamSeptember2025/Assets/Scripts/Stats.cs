@@ -1,16 +1,21 @@
+using System;
 using UnityEngine;
 
 public class Stats : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] Sprite[] _playerSprites;
+    [SerializeField] int _index = 0;
+    [SerializeField] SpriteRenderer _spriteRenderer;
+
+
+
+    private void Start()
     {
-        
+        SetSprite();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetSprite()
     {
-        
+        _spriteRenderer.sprite = _playerSprites[_index];
     }
 }
