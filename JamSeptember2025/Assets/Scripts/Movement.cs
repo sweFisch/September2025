@@ -49,6 +49,8 @@ public class Movement : MonoBehaviour
     Vector2 inputMove; // input vector
     bool _jumpIsPressed = false;
 
+    public event EventHandler OnJumpImpact;
+
 
     private void Awake()
     {
@@ -123,7 +125,7 @@ public class Movement : MonoBehaviour
 
             // ended early false
             // Invoke possible event for particle ect
-
+            OnJumpImpact?.Invoke(this, EventArgs.Empty);
         }
         // Left the ground
         else if (_isGrounded && !groundHit)
@@ -227,5 +229,11 @@ public class Movement : MonoBehaviour
     private void ApplyMovement()
     {
         _rb.linearVelocity = _frameVelocity;
+    }
+
+
+    public Vector2 GetPlayerVelocity()
+    {
+        return _frameVelocity;
     }
 }
