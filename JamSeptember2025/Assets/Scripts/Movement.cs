@@ -40,13 +40,14 @@ public class Movement : MonoBehaviour
 
     private bool _cachedQueryStartInColliders; // bool to capture orignial settings
 
+    // Jump extra input data
     bool _jumpToConsume = false;
+    bool _endedJumpEarly = false;
     float _timeJumpWasPressed = -555.0f;
 
-    // Input simple
+    // Input data
     Vector2 inputMove; // input vector
-    //InputAction _inputActionMove;
-    //InputAction _inputActionJump;
+    bool _jumpIsPressed = false;
 
 
     private void Awake()
@@ -67,21 +68,17 @@ public class Movement : MonoBehaviour
         if (button.isPressed)
         {
             _jumpToConsume = true;
+            _jumpIsPressed = true;
             _timeJumpWasPressed = _time;
         }
+        //Debug.Log(button);
         if (!button.isPressed)
         {
-            // Button release
-            // _timeJumpWasPressed gets reset on jump execute...
-            Debug.Log($"Jump Pressed for : {_time - _timeJumpWasPressed} : {_time} : {_timeJumpWasPressed}");
+            // Button release (This needs a press and release modifier on the input system!)
+            _jumpIsPressed = false;
         }
     }
 
-    void Start()
-    {
-        //_inputActionMove = InputSystem.actions.FindAction("Move");
-        //_inputActionJump = InputSystem.actions.FindAction("Jump");
-    }
 
     void Update()
     {
@@ -89,14 +86,7 @@ public class Movement : MonoBehaviour
         _time += Time.deltaTime;
 
         // Now using a Player Input and the send messages 
-        // Gather input - Simple
-        //inputMove = _inputActionMove.ReadValue<Vector2>();
 
-        //if (_inputActionJump.WasPressedThisFrame())
-        //{
-        //    _jumpToConsume = true;
-        //    _timeJumpWasPressed = _time;
-        //}
     }
 
     private void FixedUpdate()
@@ -157,7 +147,11 @@ public class Movement : MonoBehaviour
     private void HandleJump()
     {
         // Check for short jump press - early release
-
+        if (!_endedJumpEarly && !_isGrounded && !_jumpIsPressed && _rb.linearVelocity.y > 0) 
+        {
+            Debug.Log("Ended Jump Early!");
+            _endedJumpEarly = true; 
+        }
 
         // Check for buffered jump input else return
         if (!_jumpToConsume && !HasBufferedJump) {return; }
@@ -176,7 +170,7 @@ public class Movement : MonoBehaviour
 
     private void Executejump()
     {
-        //_endedJumpEarly = false;
+        _endedJumpEarly = false;
         _timeJumpWasPressed = 0;
         _bufferedJumpUsable = false;
         _coyoteUsable = false;
@@ -216,8 +210,12 @@ public class Movement : MonoBehaviour
         else
         {
             float inAirGravity = fallAcceleration;
-            // ended jump early ?? extra modifier for gravity so it gets aborted
-
+            // ended jump early ? extra modifier for gravity so it gets aborted quicker, and then falls like normal
+            if (_endedJumpEarly && _frameVelocity.y > 0f)
+            {
+                float jumpEndedEarlyModifier = 3f;
+                inAirGravity *= jumpEndedEarlyModifier;
+            }
             // make a growing velocity down towards the maxFallSpeed
             _frameVelocity.y = Mathf.MoveTowards(_frameVelocity.y, -maxFallSpeed, inAirGravity * Time.fixedDeltaTime);
             

@@ -36,7 +36,7 @@ public class ControlCam : MonoBehaviour
         float vertical = bounds.size.y;
         float horizontal = bounds.size.x;
 
-        var size = Mathf.Max(horizontal, vertical) * 0.5f; // Get the half size for ortographic camera
+        var size = Mathf.Max(horizontal, vertical) * 0.6f; // Get the half size for ortographic camera  OBS testing outside 0.5
         var center = bounds.center + new Vector3(0, 0, -10); // get center and offset so camera is not at zero
 
         return (center, size);

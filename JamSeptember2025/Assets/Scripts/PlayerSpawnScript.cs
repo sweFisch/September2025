@@ -23,8 +23,13 @@ public class PlayerSpawnScript : MonoBehaviour
         {
             // First player behavior
         }
+
+
+        playerInput.GetComponent<Stats>().SetSprite(_playerCount);
+
         _playerCount++;
 
+        // Add player to camera
         controlCam.AddTrackingGameObject(playerInput.gameObject);
     }
 }

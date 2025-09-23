@@ -18,4 +18,10 @@ public class Stats : MonoBehaviour
     {
         _spriteRenderer.sprite = _playerSprites[_index];
     }
+
+    public void SetSprite(int index)
+    {
+        _index = index;
+        SetSprite();
+    }
 }
