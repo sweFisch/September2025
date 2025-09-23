@@ -1,7 +1,9 @@
 using System;
+using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
@@ -19,12 +21,7 @@ public class Movement : MonoBehaviour
     [SerializeField] float acceleration = 120f;
 
 
-    Vector2 inputMove; // input vector
-    InputAction _inputActionMove;
-    InputAction _inputActionJump;
-
     Vector2 _frameVelocity; // Velocity vector each frame
-
 
     Rigidbody2D _rb;
     CapsuleCollider2D _capsuleCollider;
@@ -46,6 +43,12 @@ public class Movement : MonoBehaviour
     bool _jumpToConsume = false;
     float _timeJumpWasPressed = -555.0f;
 
+    // Input simple
+    Vector2 inputMove; // input vector
+    //InputAction _inputActionMove;
+    //InputAction _inputActionJump;
+
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -54,10 +57,30 @@ public class Movement : MonoBehaviour
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
     }
 
+    public void OnMove(InputValue value)
+    {
+        inputMove = value.Get<Vector2>();
+    }
+
+    public void OnJump(InputValue button)
+    {
+        if (button.isPressed)
+        {
+            _jumpToConsume = true;
+            _timeJumpWasPressed = _time;
+        }
+        if (!button.isPressed)
+        {
+            // Button release
+            // _timeJumpWasPressed gets reset on jump execute...
+            Debug.Log($"Jump Pressed for : {_time - _timeJumpWasPressed} : {_time} : {_timeJumpWasPressed}");
+        }
+    }
+
     void Start()
     {
-        _inputActionMove = InputSystem.actions.FindAction("Move");
-        _inputActionJump = InputSystem.actions.FindAction("Jump");
+        //_inputActionMove = InputSystem.actions.FindAction("Move");
+        //_inputActionJump = InputSystem.actions.FindAction("Jump");
     }
 
     void Update()
@@ -65,15 +88,15 @@ public class Movement : MonoBehaviour
         
         _time += Time.deltaTime;
 
-        // Gather input
+        // Now using a Player Input and the send messages 
+        // Gather input - Simple
+        //inputMove = _inputActionMove.ReadValue<Vector2>();
 
-        inputMove = _inputActionMove.ReadValue<Vector2>();
-
-        if (_inputActionJump.WasPressedThisFrame())
-        {
-            _jumpToConsume = true;
-            _timeJumpWasPressed = _time;
-        }
+        //if (_inputActionJump.WasPressedThisFrame())
+        //{
+        //    _jumpToConsume = true;
+        //    _timeJumpWasPressed = _time;
+        //}
     }
 
     private void FixedUpdate()

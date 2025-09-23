@@ -54,4 +54,9 @@ public class ControlCam : MonoBehaviour
         Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, CalculateOrthoSize().center, ref _velocity, _smoothTime);
 
     }
+
+    public void AddTrackingGameObject(GameObject newGameObject)
+    {
+        gameObjectList.Add(newGameObject);
+    }
 }
