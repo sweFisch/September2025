@@ -1,17 +1,43 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ItemHandler : MonoBehaviour
 {
     [SerializeField] Transform _itemPoint;
     [SerializeField] Item _item;
 
+    public List<Item> items;
 
+    public Rigidbody2D rb;
     
     // Handle input for Items
 
     private void Start()
     {
-        // Setup player input 
+        rb = GetComponent<Rigidbody2D>();   
+    }
+
+    public void OnInteract(InputValue val)
+    {
+        if (_item != null) 
+        { 
+            _item.Drop(); 
+            _item = null;
+        }
+        else
+        {
+            PickupCosestItemInRange();
+        }
+    }
+    public void OnAttack(InputValue val)
+    {
+        if (_item != null) { _item.Use(); }
+        else
+        {
+            //shove.Use()
+        }
 
     }
 
@@ -19,23 +45,26 @@ public class ItemHandler : MonoBehaviour
     {
         if (_item != null) 
         {
-            SetPosition(_itemPoint);
+            _item.SetPosition(_itemPoint,rb.linearVelocity);
         }
     }
 
-    private void Use()
+    void PickupCosestItemInRange()
     {
-        _item.Use();
+        float minDistFound = Mathf.Infinity;
+        Item closest = null;
+        foreach (var item in items)
+        {
+            if (item.owned == true) { continue; }
+            float dist = Vector2.Distance(item.transform.position, transform.position);
+            if (dist < minDistFound)
+            {
+                minDistFound = dist;
+                closest = item;
+            }
+        }
+        _item = closest;
     }
 
-    private void Drop()
-    {
-        _item.Drop();
-    }
-
-    private void SetPosition(Transform itempoint)
-    {
-        _item.SetPosition(itempoint);
-    }
 
 }
