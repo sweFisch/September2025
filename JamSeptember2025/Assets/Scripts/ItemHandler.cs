@@ -9,18 +9,23 @@ public class ItemHandler : MonoBehaviour
     [SerializeField] Item _item;
 
     public List<Item> items;
+
+    public Rigidbody2D rb;
     
     // Handle input for Items
 
     private void Start()
     {
-        // Setup player input 
-
+        rb = GetComponent<Rigidbody2D>();   
     }
 
     public void OnInteract(InputValue val)
     {
-        if (_item != null) { _item.Drop(); }
+        if (_item != null) 
+        { 
+            _item.Drop(); 
+            _item = null;
+        }
         else
         {
             PickupCosestItemInRange();
@@ -40,7 +45,7 @@ public class ItemHandler : MonoBehaviour
     {
         if (_item != null) 
         {
-            SetPosition(_itemPoint);
+            _item.SetPosition(_itemPoint,rb.linearVelocity);
         }
     }
 
@@ -61,10 +66,5 @@ public class ItemHandler : MonoBehaviour
         _item = closest;
     }
 
-
-    private void SetPosition(Transform itempoint)
-    {
-        _item.SetPosition(itempoint);
-    }
 
 }

@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 4431058896912651738}
   - component: {fileID: 2747105350717061757}
   - component: {fileID: 7029380792713951064}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemHandler
   _itemPoint: {fileID: 7099628489075388279}
   _item: {fileID: 0}
+  items: []
 --- !u!114 &4712618005982615676
 MonoBehaviour:
   m_ObjectHideFlags: 0
