@@ -64,7 +64,7 @@ public class ItemHandler : MonoBehaviour
                 _itemPoint.position = handLeft.position; 
                 _itemPoint.rotation = handLeft.rotation; 
             }
-            _item.SetPosition(_itemPoint,rb.linearVelocity);
+            _item.SetPosition(_itemPoint,rb.linearVelocity, _playerMovement.FacingRight);
         }
     }
 

@@ -13,6 +13,8 @@ public class Item : MonoBehaviour
 
     public Vector2 _playerVelocity;
 
+    public SpriteRenderer _spriteRenderer;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -23,12 +25,23 @@ public class Item : MonoBehaviour
         if (!owned) { Impact(); }
     }
 
-    public void SetPosition(Transform newTransform, Vector2 playerVelocity)
+    public void SetPosition(Transform newTransform, Vector2 playerVelocity, bool isFacingRight)
     {        
         transform.position = newTransform.position;
         transform.rotation = newTransform.rotation;
         _playerVelocity = playerVelocity;
         rb.linearVelocity = Vector2.zero;
+
+        if (!isFacingRight) 
+        {
+            _spriteRenderer.flipX = true;
+            _spriteRenderer.flipY = true;
+        }
+        else
+        {
+            _spriteRenderer.flipX = false;
+            _spriteRenderer.flipY = false;
+        }
         
     }
 
