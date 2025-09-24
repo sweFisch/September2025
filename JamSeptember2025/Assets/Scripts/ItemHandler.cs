@@ -84,6 +84,7 @@ public class ItemHandler : MonoBehaviour
             }
         }
         _item = closest;
+        _item?.Held(true);
     }
 
 

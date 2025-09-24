@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PotionItem
   maxThrowSpeed: 20
-  toughness: 8
+  toughness: 7
   owned: 0
   rb: {fileID: 7546895730628111044}
   _playerVelocity: {x: 0, y: 0}

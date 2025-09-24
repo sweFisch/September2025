@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponItem
   maxThrowSpeed: 20
-  toughness: 20
+  toughness: 10
   owned: 0
   rb: {fileID: 4955544229096342584}
   _playerVelocity: {x: 0, y: 0}
