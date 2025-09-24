@@ -6,16 +6,21 @@ public class Item : MonoBehaviour
 {
     // Item class handle interaction and pickup
     public float maxThrowSpeed = 20;
+    public float toughness = 20;
 
     public bool owned;
     public Rigidbody2D rb;
-    private BoxCollider2D bc2d;
 
     public Vector2 _playerVelocity;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        if (!owned) { Impact(); }
     }
 
     public void SetPosition(Transform newTransform, Vector2 playerVelocity)
@@ -44,6 +49,15 @@ public class Item : MonoBehaviour
 
     virtual public void Mishap()
     {
+        print("misshap");
+    }
+
+    float lastVel;
+    void Impact()
+    {
+
+        if (rb.linearVelocity.magnitude - lastVel <= -toughness) { Mishap(); }
+        lastVel = rb.linearVelocity.magnitude;
 
     }
 
