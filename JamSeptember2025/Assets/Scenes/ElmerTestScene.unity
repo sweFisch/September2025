@@ -610,6 +610,10 @@ PrefabInstance:
       value: Potion (1)
       objectReference: {fileID: 0}
     - target: {fileID: 4640004550381503644, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
+      propertyPath: effectDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640004550381503644, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
       propertyPath: testEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -854,15 +858,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da416c8b05c0fd34297e78ce4cb60bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
-  jumpPower: 36
-  maxFallSpeed: 30
-  fallAcceleration: 110
   _groundingForce: -1.5
   _groundedDistance: 0.05
-  groundDeceleration: 60
-  airDeceleration: 30
-  maxSpeed: 14
-  acceleration: 120
   _jumpBuffer: 0.2
   _coyoteTime: 0.1
 --- !u!1001 &1110093826
@@ -1200,6 +1197,10 @@ PrefabInstance:
     - target: {fileID: 3050347507341463200, guid: a28e47586e5c8d647a796b1874d38d5a, type: 3}
       propertyPath: m_Name
       value: PlayerBLABLABLA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712618005982615676, guid: a28e47586e5c8d647a796b1874d38d5a, type: 3}
+      propertyPath: maxSpeedMod
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7661369834609041036, guid: a28e47586e5c8d647a796b1874d38d5a, type: 3}
       propertyPath: m_LocalPosition.z

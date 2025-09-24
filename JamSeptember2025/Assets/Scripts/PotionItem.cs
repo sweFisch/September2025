@@ -3,14 +3,10 @@ using UnityEngine.Events;
 
 public class PotionItem : Item
 {
+    public Stats.StatusEffects effect;
+    public float effectDuration;
     public GameObject SplashObject;
     public GameObject particles;
-
-    public enum StatusBuff
-    {
-        speedUp = 0,
-        speedDown = 1,
-    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Use()
@@ -50,6 +46,6 @@ public class PotionItem : Item
 
     void Affect(GameObject player)
     {
-
+        player.GetComponent<Stats>().BuffPicker(effect, effectDuration);
     }
 }
