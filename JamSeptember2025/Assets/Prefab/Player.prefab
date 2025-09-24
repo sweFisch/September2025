@@ -198,6 +198,22 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4d86df27e3156b343badda0196a9f1c3, type: 3}
   _index: 6
   _spriteRenderer: {fileID: 782655001848262615}
+  jumpPowerBase: 36
+  maxFallSpeedBase: 30
+  fallAccelerationBase: 110
+  groundDecelerationBase: 60
+  airDecelerationBase: 30
+  maxSpeedBase: 14
+  accelerationBase: 120
+  jumpPowerMod: 1
+  maxFallSpeedMod: 1
+  fallAccelerationMod: 1
+  groundDecelerationMod: 1
+  airDecelerationMod: 1
+  maxSpeedMod: 1
+  accelerationMod: 1
+  _healthScript: {fileID: -6478338172818070207}
+  maxHealth: 100
 --- !u!50 &4431058896912651738
 Rigidbody2D:
   serializedVersion: 5
