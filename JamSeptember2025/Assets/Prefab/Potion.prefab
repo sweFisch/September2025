@@ -129,8 +129,9 @@ MonoBehaviour:
   maxThrowSpeed: 20
   toughness: 8
   owned: 0
-  rb: {fileID: 0}
+  rb: {fileID: 7546895730628111044}
   _playerVelocity: {x: 0, y: 0}
+  _spriteRenderer: {fileID: 3381279370605196793}
   SplashObject: {fileID: 0}
 --- !u!50 &7546895730628111044
 Rigidbody2D:
@@ -206,7 +207,7 @@ GameObject:
   - component: {fileID: 6839196804867379559}
   - component: {fileID: 3381279370605196793}
   m_Layer: 0
-  m_Name: emerald
+  m_Name: PotionSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

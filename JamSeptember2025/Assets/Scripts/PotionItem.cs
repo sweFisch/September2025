@@ -17,6 +17,22 @@ public class PotionItem : Item
         }
     }
 
+    public override void SetPosition(Transform newTransform, Vector2 playerVelocity, bool isFacingRight)
+    {
+        base.SetPosition(newTransform, playerVelocity, isFacingRight);
+        
+        if (!isFacingRight)
+        {
+            _spriteRenderer.flipX = true;
+            _spriteRenderer.flipY = true;
+        }
+        else
+        {
+            _spriteRenderer.flipX = false;
+            _spriteRenderer.flipY = false;
+        }
+    }
+
     public override void Mishap()
     {
         Instantiate(SplashObject);
