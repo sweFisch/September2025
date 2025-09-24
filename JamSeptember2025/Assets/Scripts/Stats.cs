@@ -7,6 +7,13 @@ public class Stats : MonoBehaviour
     [SerializeField] int _index = 0;
     [SerializeField] SpriteRenderer _spriteRenderer;
 
+    float health;
+    [SerializeField] float movespeedBase;
+    float movespeedMod;
+    float jumpPower; //jumpaccelleration
+    float gravity; //fall acelleration
+    float friction; //
+
 
 
     private void Start()
@@ -23,5 +30,22 @@ public class Stats : MonoBehaviour
     {
         _index = index;
         SetSprite();
+    }
+
+
+
+    float movespeedBuffTimer;
+    public void AddMSBuff(float time)
+    {
+        movespeedBuffTimer = Math.Max(movespeedBuffTimer, time) + Time.time;
+    }
+
+    private void Update()
+    {
+        movespeedMod = movespeedBase;
+
+        if ( Time.time < movespeedBuffTimer) { movespeedMod *= 2; }
+        // if (( Time.time < movespeedDebuffTimer) { movespeedmod /= 2; }
+
     }
 }
