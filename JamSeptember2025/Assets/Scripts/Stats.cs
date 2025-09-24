@@ -37,6 +37,7 @@ public class Stats : MonoBehaviour
     float movespeedBuffTimer;
     public void AddMSBuff(float time)
     {
+        print(gameObject.name + "used speed buff");
         movespeedBuffTimer = Math.Max(movespeedBuffTimer, time) + Time.time;
     }
 

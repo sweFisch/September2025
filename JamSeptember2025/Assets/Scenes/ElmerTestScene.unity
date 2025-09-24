@@ -609,6 +609,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Potion (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4640004550381503644, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
+      propertyPath: testEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640004550381503644, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
+      propertyPath: testEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640004550381503644, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
+      propertyPath: testEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4712618005982615676, guid: a28e47586e5c8d647a796b1874d38d5a, type: 3}
+    - target: {fileID: 4640004550381503644, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
+      propertyPath: testEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640004550381503644, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
+      propertyPath: testEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddMSBuff
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640004550381503644, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
+      propertyPath: testEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Stats, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640004550381503644, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
+      propertyPath: testEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640004550381503644, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
+      propertyPath: testEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8311736598789686513, guid: ed5c96ffde9bbe04da5cae6ac4e316f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.33680326
@@ -1167,7 +1199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3050347507341463200, guid: a28e47586e5c8d647a796b1874d38d5a, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: PlayerBLABLABLA
       objectReference: {fileID: 0}
     - target: {fileID: 7661369834609041036, guid: a28e47586e5c8d647a796b1874d38d5a, type: 3}
       propertyPath: m_LocalPosition.z
