@@ -14,10 +14,12 @@ public class Item : MonoBehaviour
     public Vector2 _playerVelocity;
 
     public SpriteRenderer _spriteRenderer;
+    BoxCollider2D boxCollider;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponentInChildren<BoxCollider2D>();
     }
 
     private void Update()
@@ -52,9 +54,11 @@ public class Item : MonoBehaviour
 
     public void Drop()
     {
+        Held(false);
+
         rb.linearVelocity = _playerVelocity;
         rb.AddForce(rb.linearVelocity * 15);
-        rb.AddForce(Vector3.up * 10);
+        rb.AddForce(Vector3.up * 20);
         rb.linearVelocity = new Vector2(Mathf.Clamp(rb.linearVelocity.x, -maxThrowSpeed, maxThrowSpeed), Mathf.Clamp(rb.linearVelocity.y, -maxThrowSpeed, maxThrowSpeed));
 
         rb.angularVelocity = 1000;
@@ -86,6 +90,12 @@ public class Item : MonoBehaviour
         ItemHandler handler = collision.GetComponent<ItemHandler>();
         if (handler == null) { return; }
         handler.items.Remove(this);
+    }
+
+    public void Held(bool held)
+    {
+        owned = held;
+        boxCollider.enabled = !held;
     }
 
 }

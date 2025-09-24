@@ -317,7 +317,7 @@ Transform:
   m_GameObject: {fileID: 8682299823367244047}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.38756, y: 0.30918, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponItem
   maxThrowSpeed: 20
-  toughness: 20
+  toughness: 10
   owned: 0
   rb: {fileID: 4955544229096342584}
   _playerVelocity: {x: 0, y: 0}

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PotionItem : Item
 {
     public GameObject SplashObject;
+    public GameObject particles;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Use()
@@ -35,7 +36,8 @@ public class PotionItem : Item
 
     public override void Mishap()
     {
-        Instantiate(SplashObject);
+        Instantiate(particles, transform.position, Quaternion.identity);
+        Instantiate(SplashObject,transform.position,Quaternion.identity);
         Destroy(this.gameObject);
     }
 
