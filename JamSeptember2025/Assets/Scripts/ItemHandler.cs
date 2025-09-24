@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class ItemHandler : MonoBehaviour
 {
     [SerializeField] Transform _itemPoint;
-    [SerializeField] Item _item;
+    [SerializeField] public Item _item;
 
     public List<Item> items;
 
