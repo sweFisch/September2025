@@ -106,7 +106,7 @@ Transform:
   m_GameObject: {fileID: 1116153785142843202}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.11282, y: -1.06267, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -132,7 +132,8 @@ MonoBehaviour:
   rb: {fileID: 7546895730628111044}
   _playerVelocity: {x: 0, y: 0}
   _spriteRenderer: {fileID: 3381279370605196793}
-  SplashObject: {fileID: 0}
+  SplashObject: {fileID: 6263042661013735009, guid: 054adc923251a3841a8cc6a3ddcbfb06, type: 3}
+  particles: {fileID: 3821397538065038999, guid: 10b0c8201fdd29749837e9cfb895b496, type: 3}
 --- !u!50 &7546895730628111044
 Rigidbody2D:
   serializedVersion: 5
