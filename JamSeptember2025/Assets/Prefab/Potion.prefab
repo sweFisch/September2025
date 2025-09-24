@@ -42,7 +42,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3c1d28f61ba0cee4daaa67f6753c9c9a, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PotionItem
   maxThrowSpeed: 20
-  toughness: 20
+  toughness: 8
   owned: 0
   rb: {fileID: 0}
   _playerVelocity: {x: 0, y: 0}
