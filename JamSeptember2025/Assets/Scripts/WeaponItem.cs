@@ -8,7 +8,7 @@ public class WeaponItem : Item
     public GameObject bullet;
     public override void Use()
     {
-        GameObject spawned = Instantiate(bullet, _firePoint.position, Quaternion.identity);
+        GameObject spawned = Instantiate(bullet, _firePoint.position, _firePoint.rotation);
         spawned.GetComponent<Bullet>()?.Fire(Mathf.Abs(_playerVelocity.x));
         print(_playerVelocity);
     }

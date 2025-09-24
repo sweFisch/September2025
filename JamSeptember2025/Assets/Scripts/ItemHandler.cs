@@ -11,14 +11,20 @@ public class ItemHandler : MonoBehaviour
     public List<Item> items;
 
     public Rigidbody2D rb;
-    
-    // Handle input for Items
+
+    public Transform handRight;
+    public Transform handLeft;
+
+    private Movement _playerMovement;
+
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();   
+        rb = GetComponent<Rigidbody2D>();
+        _playerMovement = GetComponent<Movement>();
     }
 
+    // Handle input for Items
     public void OnInteract(InputValue val)
     {
         if (_item != null) 
@@ -33,7 +39,10 @@ public class ItemHandler : MonoBehaviour
     }
     public void OnAttack(InputValue val)
     {
-        if (_item != null) { _item.Use(); }
+        if (_item != null) 
+        { 
+            _item.Use(); 
+        }
         else
         {
             //shove.Use()
@@ -45,9 +54,20 @@ public class ItemHandler : MonoBehaviour
     {
         if (_item != null) 
         {
+            if (_playerMovement.FacingRight)
+            {
+                _itemPoint.position = handRight.position;
+                _itemPoint.rotation = handRight.rotation;
+            }
+            else
+            {
+                _itemPoint.position = handLeft.position; 
+                _itemPoint.rotation = handLeft.rotation; 
+            }
             _item.SetPosition(_itemPoint,rb.linearVelocity);
         }
     }
+
 
     void PickupCosestItemInRange()
     {

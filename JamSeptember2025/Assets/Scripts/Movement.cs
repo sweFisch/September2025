@@ -50,6 +50,8 @@ public class Movement : MonoBehaviour
 
     public event EventHandler OnJumpImpact;
 
+    public bool FacingRight { get; private set; }
+
 
     private void Awake()
     {
@@ -62,6 +64,15 @@ public class Movement : MonoBehaviour
     public void OnMove(InputValue value)
     {
         inputMove = value.Get<Vector2>();
+
+        if (inputMove.x > 0.1f)
+        {
+            FacingRight = true;
+        }
+        else if (inputMove.x < -0.1f)
+        {
+            FacingRight = false;
+        }
     }
 
     public void OnJump(InputValue button)
