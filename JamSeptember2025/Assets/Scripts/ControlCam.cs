@@ -19,15 +19,18 @@ public class ControlCam : MonoBehaviour
 
     private (Vector3 center, float size) CalculateOrthoSize()
     {
-        Bounds bounds = new Bounds();
+        Bounds bounds = new Bounds(Vector3.zero,Vector3.one);
 
-
-
-        foreach (GameObject go in gameObjectList)
+        if(gameObjectList.Count > 0)
         {
-            if (go != null)
+            bounds = new Bounds(gameObjectList[0].transform.position,Vector3.one);
+
+            foreach (GameObject go in gameObjectList)
             {
-                bounds.Encapsulate(go.transform.position);
+                if (go != null)
+                {
+                    bounds.Encapsulate(go.transform.position);
+                }
             }
         }
 
@@ -58,5 +61,10 @@ public class ControlCam : MonoBehaviour
     public void AddTrackingGameObject(GameObject newGameObject)
     {
         gameObjectList.Add(newGameObject);
+    }
+
+    public void RemoveTrackingGameObject(GameObject removeGameObject) 
+    {
+        gameObjectList.Remove(removeGameObject);
     }
 }
