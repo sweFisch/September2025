@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 4431058896912651738}
   - component: {fileID: 2747105350717061757}
   - component: {fileID: 7029380792713951064}
+  - component: {fileID: -6478338172818070207}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -142,16 +143,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da416c8b05c0fd34297e78ce4cb60bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  _speed: 5
   jumpPower: 35
-  maxFallSpeed: 20
-  fallAcceleration: 110
+  maxFallSpeed: 15
+  fallAcceleration: 90
   _groundingForce: -1.5
   _groundedDistance: 0.05
-  groundDeceleration: 60
-  airDeceleration: 30
-  maxSpeed: 14
-  acceleration: 120
+  groundDeceleration: 90
+  airDeceleration: 50
+  maxSpeed: 12
+  acceleration: 100
   _jumpBuffer: 0.2
   _coyoteTime: 0.1
 --- !u!114 &32571031748047941
@@ -169,6 +169,7 @@ MonoBehaviour:
   _itemPoint: {fileID: 7099628489075388279}
   _item: {fileID: 0}
   items: []
+  rb: {fileID: 0}
 --- !u!114 &4712618005982615676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +288,18 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &-6478338172818070207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3050347507341463200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 589ddbbe72abba247bb7497f3576c3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
 --- !u!1 &3302730718766745850
 GameObject:
   m_ObjectHideFlags: 0

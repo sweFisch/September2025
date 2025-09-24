@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] float _speed = 5f;
     [SerializeField] float jumpPower = 36f;
     [SerializeField] float maxFallSpeed = 30f;
     [SerializeField] float fallAcceleration = 110f;
@@ -199,7 +198,6 @@ public class Movement : MonoBehaviour
 
             _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, inputMove.x * maxSpeed, acceleration * Time.fixedDeltaTime);
         }
-        //float moveVectorX = inputMove.x * _speed * Time.deltaTime;
     }
 
     private void HandleGravity()
