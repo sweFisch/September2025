@@ -25,23 +25,23 @@ public class Item : MonoBehaviour
         if (!owned) { Impact(); }
     }
 
-    public void SetPosition(Transform newTransform, Vector2 playerVelocity, bool isFacingRight)
+    virtual public void SetPosition(Transform newTransform, Vector2 playerVelocity, bool isFacingRight)
     {        
         transform.position = newTransform.position;
         transform.rotation = newTransform.rotation;
         _playerVelocity = playerVelocity;
         rb.linearVelocity = Vector2.zero;
 
-        if (!isFacingRight) 
-        {
-            _spriteRenderer.flipX = true;
-            _spriteRenderer.flipY = true;
-        }
-        else
-        {
-            _spriteRenderer.flipX = false;
-            _spriteRenderer.flipY = false;
-        }
+        //if (!isFacingRight) 
+        //{
+        //    _spriteRenderer.flipX = true;
+        //    _spriteRenderer.flipY = true;
+        //}
+        //else
+        //{
+        //    _spriteRenderer.flipX = false;
+        //    _spriteRenderer.flipY = false;
+        //}
         
     }
 
