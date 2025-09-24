@@ -28,3 +28,7 @@ A short game jam
 
 \[] First playtest
 
+\[] Character select screen with game settings
+
+\[] Persistant game settings
+
