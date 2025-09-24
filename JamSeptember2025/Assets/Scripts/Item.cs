@@ -6,24 +6,42 @@ public class Item : MonoBehaviour
 {
     // Item class handle interaction and pickup
     public float maxThrowSpeed = 20;
+    public float toughness = 20;
 
     public bool owned;
     public Rigidbody2D rb;
-    private BoxCollider2D bc2d;
 
     public Vector2 _playerVelocity;
+
+    public SpriteRenderer _spriteRenderer;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void SetPosition(Transform newTransform, Vector2 playerVelocity)
+    private void Update()
+    {
+        if (!owned) { Impact(); }
+    }
+
+    public void SetPosition(Transform newTransform, Vector2 playerVelocity, bool isFacingRight)
     {        
         transform.position = newTransform.position;
         transform.rotation = newTransform.rotation;
         _playerVelocity = playerVelocity;
         rb.linearVelocity = Vector2.zero;
+
+        if (!isFacingRight) 
+        {
+            _spriteRenderer.flipX = true;
+            _spriteRenderer.flipY = true;
+        }
+        else
+        {
+            _spriteRenderer.flipX = false;
+            _spriteRenderer.flipY = false;
+        }
         
     }
 
@@ -44,6 +62,15 @@ public class Item : MonoBehaviour
 
     virtual public void Mishap()
     {
+        print("misshap");
+    }
+
+    float lastVel;
+    void Impact()
+    {
+
+        if (rb.linearVelocity.magnitude - lastVel <= -toughness) { Mishap(); }
+        lastVel = rb.linearVelocity.magnitude;
 
     }
 

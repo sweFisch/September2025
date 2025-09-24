@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 4431058896912651738}
   - component: {fileID: 2747105350717061757}
   - component: {fileID: 7029380792713951064}
+  - component: {fileID: -6478338172818070207}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -126,6 +127,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7099628489075388279}
+  - {fileID: 2862125875556613265}
+  - {fileID: 5051194944839367087}
   - {fileID: 6588535091649693866}
   - {fileID: 7661369834609041036}
   m_Father: {fileID: 0}
@@ -142,16 +145,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da416c8b05c0fd34297e78ce4cb60bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  _speed: 5
   jumpPower: 35
-  maxFallSpeed: 20
-  fallAcceleration: 110
+  maxFallSpeed: 15
+  fallAcceleration: 90
   _groundingForce: -1.5
   _groundedDistance: 0.05
-  groundDeceleration: 60
-  airDeceleration: 30
-  maxSpeed: 14
-  acceleration: 120
+  groundDeceleration: 90
+  airDeceleration: 50
+  maxSpeed: 12
+  acceleration: 100
   _jumpBuffer: 0.2
   _coyoteTime: 0.1
 --- !u!114 &32571031748047941
@@ -169,6 +171,9 @@ MonoBehaviour:
   _itemPoint: {fileID: 7099628489075388279}
   _item: {fileID: 0}
   items: []
+  rb: {fileID: 0}
+  handRight: {fileID: 2862125875556613265}
+  handLeft: {fileID: 5051194944839367087}
 --- !u!114 &4712618005982615676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +292,20 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &-6478338172818070207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3050347507341463200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 589ddbbe72abba247bb7497f3576c3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  _currentHealth: 100
+  _maxHealth: 100
 --- !u!1 &3302730718766745850
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +520,37 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!1 &4725481747443345833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2862125875556613265}
+  m_Layer: 0
+  m_Name: HandRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2862125875556613265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4725481747443345833}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.267, y: -0.032, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1609298388588284447}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6001791895589146204
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,3 +621,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationController
   animator: {fileID: 3204507960375713068}
   playerMovement: {fileID: 2821987292061257526}
+--- !u!1 &6296372769135725630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5051194944839367087}
+  m_Layer: 0
+  m_Name: HandLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5051194944839367087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6296372769135725630}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: -0.267, y: -0.032, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1609298388588284447}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
