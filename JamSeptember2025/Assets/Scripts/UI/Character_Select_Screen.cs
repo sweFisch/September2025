@@ -4,7 +4,7 @@ public class Character_Select_Screen : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-public int timeAmount;
+public int roundsAmout;
 public int livesAmount;
 public int levelSelect;
 
@@ -40,10 +40,6 @@ public void LockCharacter(){
 public void NumberOfLivesIncrease(){
 
 livesAmount++;
-if(livesAmount == -29 && livesAmount <=0){
-
-    livesAmount = 1;
-}
 
 
 }
@@ -55,21 +51,17 @@ livesAmount--;
 
 if (livesAmount <= 0){
 
-    livesAmount = -30;
+    livesAmount = 1;
 }
 
 }
 
 // increase time in units of 30 seconds
 
-public void TimeIncrease(){
+public void RoundIncrease(){
 
-timeAmount =+ 30;
+roundsAmout =+ 1;
 
-if(timeAmount <= 0){
-
-    timeAmount = 30;    
-}
 
 }
 
@@ -77,25 +69,15 @@ if(timeAmount <= 0){
 // Decrease time in units of 30 seconds if <= 0 set to -30 effectivly disabeling time 
 
                 // - (if both lives and time is set to -30 then the game has no win condition, should we allow this?) -
-public void TimeDecrease(){
+public void RoundDecrease(){
 
-timeAmount -= 30;
+roundsAmout -= 1;
 
-if (timeAmount <= 0){
+if (roundsAmout <= 0){
 
-    timeAmount = -30;
+    roundsAmout = 1;
 }
 }
 
 
-public void NextLevel(){
-
-    levelSelect++;
-}
-
-
-public void PreviousLevel(){
-
-    levelSelect--;
-}
 }
