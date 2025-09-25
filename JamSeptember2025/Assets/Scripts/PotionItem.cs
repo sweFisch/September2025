@@ -1,8 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PotionItem : Item
 {
+    public Stats.StatusEffects effect;
+    public float effectDuration;
     public GameObject SplashObject;
+    public GameObject particles;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Use()
@@ -17,14 +21,31 @@ public class PotionItem : Item
         }
     }
 
+    public override void SetPosition(Transform newTransform, Vector2 playerVelocity, bool isFacingRight)
+    {
+        base.SetPosition(newTransform, playerVelocity, isFacingRight);
+        
+        if (!isFacingRight)
+        {
+            _spriteRenderer.flipX = true;
+            _spriteRenderer.flipY = true;
+        }
+        else
+        {
+            _spriteRenderer.flipX = false;
+            _spriteRenderer.flipY = false;
+        }
+    }
+
     public override void Mishap()
     {
-        Instantiate(SplashObject);
+        Instantiate(particles, transform.position, Quaternion.identity);
+        Instantiate(SplashObject,transform.position,Quaternion.identity);
         Destroy(this.gameObject);
     }
 
     void Affect(GameObject player)
     {
-
+        player.GetComponent<Stats>().BuffPicker(effect, effectDuration);
     }
 }

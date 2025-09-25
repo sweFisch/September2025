@@ -1,0 +1,287 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class GameManager : MonoBehaviour
+{
+    [SerializeField] UIPlayer[] uiPlayerArray;
+
+
+
+    public class PlayerStatus
+    {
+        public GameObject playerGO;
+        public Stats playerStats;
+        public Movement playerMovement;
+        public Health playerHealth;
+        public ItemHandler playerItemHandler;
+
+        public int playerIndex {  get; private set; }
+
+        public int PlayerLives { get; set; }
+        int playerSprite = 0;
+
+        public PlayerStatus(GameObject newPlayerGO, int lives, int newPlayerIndex ,int playerSpriteIndex = 0)
+        {
+            playerGO = newPlayerGO;
+            PlayerLives = lives;
+            playerSprite = playerSpriteIndex;
+            playerStats = playerGO.GetComponent<Stats>();
+            playerMovement = playerGO.GetComponent<Movement>();
+            playerHealth = playerGO.GetComponent<Health>();
+            playerItemHandler = playerGO.GetComponent<ItemHandler>();
+
+            playerIndex = newPlayerIndex;
+
+            ChangeSprite(playerSprite);
+        }
+
+        public void PlayerResting()
+        {
+            playerStats.SetBloodSprite();
+            playerStats.enabled = false;
+            playerMovement.enabled = false;
+            playerHealth.enabled = false;
+            playerItemHandler.DropHeldItems();
+            playerItemHandler.enabled = false;
+        }
+
+        public void PlayerActive()
+        {
+            playerStats.enabled = true;
+            playerMovement.enabled = true;
+            playerHealth.enabled = true;
+            playerItemHandler.enabled = true;
+            ChangeSprite(playerSprite);
+        }
+
+        public void ChangeSprite(int index)
+        {
+            playerSprite = index;
+            playerStats.SetSprite(playerSprite);
+        }
+
+        public void ResetStats() // On death
+        {
+            // Resets all stats on player - aka set all timers to 0 so no mods effect player 
+            // also health
+            playerGO.GetComponent<Health>().Heal(1000);
+        }
+
+        public void Spawn(Transform spawnTransform)
+        {
+            PlayerActive();
+            playerGO.transform.position = spawnTransform.position;
+        }
+
+        public bool CompareGameObject(GameObject playerToCompare)
+        {
+            if (playerToCompare == playerGO)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public int maxLives = 3;
+
+
+    public static GameManager Instance { get; private set; } // Singelton
+
+    [SerializeField] private ControlCam controlCam; // Camera controller, keeping players in view
+
+    List<PlayerStatus> _playerList;
+
+    public Transform[] spawnPoints;
+    private int _playerCount = 0;
+    private int _lastSpawnIndex = 0;
+
+
+
+    void Start()
+    {
+        // Singelton
+        if (Instance == null)
+        {
+            Instance = this;
+
+            UIPlayerCount(_playerCount); // Update UI overlay
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    private void Awake()
+    {
+        if (controlCam == null)
+        {
+            controlCam = GameObject.FindFirstObjectByType<ControlCam>();
+        }
+
+        _playerList = new List<PlayerStatus>();
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current[Key.O].wasPressedThisFrame)
+        {
+            Debug.Log("Restarting game");
+            foreach (PlayerStatus playerStatus in _playerList)
+            {
+                playerStatus.PlayerResting();
+                playerStatus.ResetStats();
+                playerStatus.Spawn(spawnPoints[GetSpawnIndex()]);
+                playerStatus.PlayerLives = maxLives;
+
+                UIUpdatePlayerLives(playerStatus.playerIndex);
+            }
+        }
+    }
+
+    public void AddPlayerToList(GameObject newPlayer)
+    {
+        // Create a new playerStatus and add to the _playerList
+        PlayerStatus newPlayerStatus = new PlayerStatus(newPlayer, maxLives, _playerCount, _playerCount);
+
+        _playerList.Add(newPlayerStatus);
+
+        UIPlayerCount(_playerCount);
+        
+    }
+
+
+    public void OnPlayerJoined(PlayerInput playerInput)
+    {
+        foreach (PlayerStatus playerStatus in _playerList)
+        {
+            if (playerStatus.CompareGameObject(playerInput.gameObject))
+            {
+                return;
+            }
+        }
+
+        // check if already in game? Disable inputs in another way ?
+        Debug.Log(playerInput);
+        Debug.Log(playerInput.gameObject);
+
+        if (_playerCount == 0)
+        {
+            // First player behavior
+        }
+
+        // Create a Player Status object in List and use that to Spawn
+        AddPlayerToList(playerInput.gameObject);
+        foreach (PlayerStatus playerStatus in _playerList)
+        {
+            if (playerStatus.CompareGameObject(playerInput.gameObject))
+            {
+                playerStatus.Spawn(spawnPoints[GetSpawnIndex()]);
+
+                UIUpdatePlayerLives(playerStatus.playerIndex);
+                UIUpdatePlayerSprites();
+            }
+        }
+
+        _playerCount++;
+
+        // Add player to camera
+        controlCam.AddTrackingGameObject(playerInput.gameObject);
+    }
+
+    public int GetSpawnIndex()
+    {
+        // Try to not get the same spawn index
+        int spawnIndex = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            spawnIndex = Random.Range(0, spawnPoints.Length);
+            if (spawnIndex != _lastSpawnIndex)
+            {
+                _lastSpawnIndex = spawnIndex;
+                return spawnIndex;
+            }
+        }
+        Debug.LogWarning("Returning The Same Spawn Index");
+        return spawnIndex;
+    }
+
+    public void PlayerDied(GameObject deadPlayer)
+    {
+        // Try to not get the same spawn index
+        int spawnIndex = GetSpawnIndex();
+
+        // Reset player attributes and stats on respawn
+        foreach (PlayerStatus playerStatus in _playerList)
+        {
+            if (playerStatus.CompareGameObject(deadPlayer)) 
+            {
+                playerStatus.PlayerLives -= 1;
+
+                UIUpdatePlayerLives(playerStatus.playerIndex);
+
+                Debug.Log("player life left : " + playerStatus.PlayerLives);
+                if (playerStatus.PlayerLives > 0)
+                {
+                    playerStatus.PlayerResting(); // Drops item as well
+                    playerStatus.ResetStats();
+                    playerStatus.Spawn(spawnPoints[spawnIndex]); // Spawn also calls player Active
+
+                    UIUpdatePlayerLives(playerStatus.playerIndex);
+                }
+                else
+                {
+                    Debug.Log($"--- Player {playerStatus.playerGO.name} Died! ---");
+                    UIplayerDead(playerStatus.playerIndex);
+                    playerStatus.PlayerResting(); // disable player
+                }
+            }
+        }
+
+    }
+
+    // UI Stuff
+    private void UIPlayerCount(int nrOfPlayers)
+    {
+        Debug.Log("Updating Player Count UI");
+        for (int i = 0; i < 4; i++) 
+        {
+            Debug.Log($"Updating Player Count UI {i}");
+            if (i <= nrOfPlayers)
+            {
+                Debug.Log($"{i} : true");
+                uiPlayerArray[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log($"{i} : false");
+                uiPlayerArray[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void UIUpdatePlayerLives(int index)
+    {
+        uiPlayerArray[index].SetAlive();
+        uiPlayerArray[index].SetMaxLife(maxLives);
+        uiPlayerArray[index].SetCurrentLife(_playerList[index].PlayerLives);
+
+    }
+    private void UIplayerDead(int index)
+    {
+        uiPlayerArray[index].SetMaxLife(maxLives);
+        uiPlayerArray[index].SetCurrentLife(_playerList[index].PlayerLives);
+        uiPlayerArray[index].SetDeath();
+    }
+
+    private void UIUpdatePlayerSprites()
+    {
+        for (int i = 0; i < _playerList.Count; i++)
+        {
+            Sprite playerSprite = _playerList[i].playerStats.GetCurrentSprite();
+            uiPlayerArray[i].SetSprite(playerSprite);
+        }
+    }
+}

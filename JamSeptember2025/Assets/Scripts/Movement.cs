@@ -7,17 +7,17 @@ using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] float jumpPower = 36f;
-    [SerializeField] float maxFallSpeed = 30f;
-    [SerializeField] float fallAcceleration = 110f;
+    float jumpPower = 36f;
+    float fallAcceleration = 110f;
+    float maxFallSpeed = 30f;
     [SerializeField] float _groundingForce = -1.5f;
     [SerializeField] float _groundedDistance = 0.05f;
 
-    [Header("Handle X movement")]
-    [SerializeField] float groundDeceleration = 60f;
-    [SerializeField] float airDeceleration = 30f;
-    [SerializeField] float maxSpeed = 14f;
-    [SerializeField] float acceleration = 120f;
+    //[Header("Handle X movement")]
+    float groundDeceleration = 60f;
+    float airDeceleration = 30f;
+    float maxSpeed = 14f;
+    float acceleration = 120f;
 
 
     Vector2 _frameVelocity; // Velocity vector each frame
@@ -48,6 +48,8 @@ public class Movement : MonoBehaviour
     Vector2 inputMove; // input vector
     bool _jumpIsPressed = false;
 
+    Stats _stats;
+
     public event EventHandler OnJumpImpact;
 
     public bool FacingRight { get; private set; }
@@ -57,6 +59,8 @@ public class Movement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _capsuleCollider = _rb.GetComponent<CapsuleCollider2D>();
+
+        _stats = gameObject.GetComponent<Stats>();
 
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
     }
@@ -103,6 +107,8 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        GetStats();
+
         CheckCollisions();
 
         HandleJump();
@@ -110,6 +116,17 @@ public class Movement : MonoBehaviour
         HandleGravity();
 
         ApplyMovement();
+    }
+
+    private void GetStats()
+    {
+        jumpPower = _stats.JumpPowerValue;
+        maxFallSpeed = _stats.MaxFallSpeedValue;
+        fallAcceleration = _stats.FallAccelerationValue;
+        groundDeceleration = _stats.GroundDecelerationValue;
+        airDeceleration = _stats.AirDecelerationValue;
+        maxSpeed = _stats.MaxSpeedValue;
+        acceleration = _stats.AccelerationValue;
     }
 
     private void CheckCollisions()
@@ -161,7 +178,7 @@ public class Movement : MonoBehaviour
         // Check for short jump press - early release
         if (!_endedJumpEarly && !_isGrounded && !_jumpIsPressed && _rb.linearVelocity.y > 0) 
         {
-            Debug.Log("Ended Jump Early!");
+            //Debug.Log("Ended Jump Early!");
             _endedJumpEarly = true; 
         }
 
@@ -172,7 +189,7 @@ public class Movement : MonoBehaviour
         // Check grounded
         if (_isGrounded || CanUseCoyote) // Or Coyote jump (_isGroudnded || CanUseCoyote)
         {
-            if (CanUseCoyote) { Debug.Log("CoyoteTime used"); }
+            //if (CanUseCoyote) { Debug.Log("CoyoteTime used"); }
             Executejump();
         }
 
