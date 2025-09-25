@@ -47,5 +47,6 @@ public class PotionItem : Item
     void Affect(GameObject player)
     {
         player.GetComponent<Stats>().BuffPicker(effect, effectDuration);
+        UseParticle(player.transform);
     }
 }

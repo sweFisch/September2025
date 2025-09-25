@@ -6,6 +6,8 @@ public class Health : MonoBehaviour
     [SerializeField] private float _maxHealth = 100;
 
     [SerializeField] GameObject _deathEffect;
+    [SerializeField] GameObject _damageParticle;
+    [SerializeField] GameObject _deathParticle;
 
     private void Start()
     {

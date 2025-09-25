@@ -10,7 +10,8 @@ public class WeaponItem : Item
     {
         GameObject spawned = Instantiate(bullet, _firePoint.position, _firePoint.rotation);
         spawned.GetComponent<Bullet>()?.Fire(Mathf.Abs(_playerVelocity.x));
-        //print(_playerVelocity);
+
+        UseParticle(_firePoint);
     }
 
     public override void Mishap()
