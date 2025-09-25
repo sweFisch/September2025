@@ -132,7 +132,9 @@ MonoBehaviour:
   rb: {fileID: 7546895730628111044}
   _playerVelocity: {x: 0, y: 0}
   _spriteRenderer: {fileID: 3381279370605196793}
-  SplashObject: {fileID: 6263042661013735009, guid: 054adc923251a3841a8cc6a3ddcbfb06, type: 3}
+  effect: 0
+  effectDuration: 0
+  SplashObject: {fileID: 4238506402798093884, guid: d19ca21d993c28d4fbda3af31f27acd4, type: 3}
   particles: {fileID: 3821397538065038999, guid: 10b0c8201fdd29749837e9cfb895b496, type: 3}
 --- !u!50 &7546895730628111044
 Rigidbody2D:

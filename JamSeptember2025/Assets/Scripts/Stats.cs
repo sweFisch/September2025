@@ -74,11 +74,11 @@ public class Stats : MonoBehaviour
     }
 
 
-    float moveSpeedBuffTimer;
+    public float moveSpeedBuffTimer;
     public void AddMoveSpeedBuff(float buffDuration)
     {
         print("used speed");
-        moveSpeedBuffTimer = Math.Max(moveSpeedBuffTimer, buffDuration) + Time.time;
+        moveSpeedBuffTimer = Math.Max(moveSpeedBuffTimer, buffDuration + Time.time) ;
     }
 
     public void BuffPicker(StatusEffects buff, float buffDuration)

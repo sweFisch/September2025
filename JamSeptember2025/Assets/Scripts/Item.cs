@@ -59,7 +59,8 @@ public class Item : MonoBehaviour
         rb.linearVelocity = _playerVelocity;
         rb.AddForce(rb.linearVelocity * 15);
         rb.AddForce(Vector3.up * 20);
-        rb.linearVelocity = new Vector2(Mathf.Clamp(rb.linearVelocity.x, -maxThrowSpeed, maxThrowSpeed), Mathf.Clamp(rb.linearVelocity.y, -maxThrowSpeed, maxThrowSpeed));
+        rb.linearVelocity = new Vector2(Mathf.Clamp(rb.linearVelocity.x, -maxThrowSpeed, maxThrowSpeed), 
+                                        Mathf.Clamp(rb.linearVelocity.y, -maxThrowSpeed / 2, maxThrowSpeed / 2));
 
         rb.angularVelocity = 1000;
     }
