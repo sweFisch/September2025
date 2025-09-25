@@ -29,9 +29,13 @@ public class Health : MonoBehaviour
                 Destroy(deathGO,0.5f); 
             }
 
+            if (_deathParticle != null)
+            {
+                Instantiate(_deathParticle, transform.position, Quaternion.identity);
+            }
             GameManager.Instance.PlayerDied(this.gameObject);
-
         }
+        else { Instantiate(_damageParticle, transform.position, Quaternion.identity); }
     }
 
 
