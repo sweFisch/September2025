@@ -49,13 +49,42 @@ public class ControlCam : MonoBehaviour
     void LateUpdate()
     {
         //var (center, size) = CalculateOrthoSize();
-
         Camera.main.orthographicSize = CalculateOrthoSize().size;
-        //_camera.transform.position = center;
+        Vector3 preferedCameraPos = CalculateOrthoSize().center;
 
-        // Smoothing camera
-        Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, CalculateOrthoSize().center, ref _velocity, _smoothTime);
+        // Camera Shake
+        if (Time.time < shakeTotalDurationTimer)
+        {
+            ApplyCameraShake(preferedCameraPos);
+        }
 
+        // Smoothing camera Position
+        Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, preferedCameraPos, ref _velocity, _smoothTime);
+    }
+    
+    // Camera Shake
+    float shakeTotalDurationTimer;
+    float stepTimer = 0;
+    float shakeSteps = 0.02f;
+    float magnitude;
+
+    public void CameraShake(float inputMagnitude, float duration)
+    {
+        magnitude = inputMagnitude;
+        shakeTotalDurationTimer = Time.time + duration;
+        stepTimer = Time.time + shakeSteps;
+    }
+    public void ApplyCameraShake(Vector3 actualPosition)
+    {
+        if (Time.time > stepTimer) 
+        {
+            Vector3 newPos = actualPosition + (Vector3)Random.insideUnitCircle.normalized * magnitude;
+            Camera.main.transform.position = newPos;
+
+            stepTimer = Time.time + shakeSteps;
+            magnitude *= 0.8f;
+        }
+        
     }
 
     public void AddTrackingGameObject(GameObject newGameObject)
@@ -66,5 +95,10 @@ public class ControlCam : MonoBehaviour
     public void RemoveTrackingGameObject(GameObject removeGameObject) 
     {
         gameObjectList.Remove(removeGameObject);
+    }
+
+    public void ClearTackingGameObjectList()
+    {
+        gameObjectList.Clear();
     }
 }

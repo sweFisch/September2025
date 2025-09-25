@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -89,11 +90,12 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; } // Singelton
 
-    [SerializeField] private ControlCam controlCam; // Camera controller, keeping players in view
+    [SerializeField] private ControlCam _controlCam; // Camera controller, keeping players in view
 
     List<PlayerStatus> _playerList;
 
-    public Transform[] spawnPoints;
+    //public Transform[] _spawnPoints;
+    public List<Transform> _spawnPoints;
     private int _playerCount = 0;
     private int _lastSpawnIndex = 0;
 
@@ -107,6 +109,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
 
             UIPlayerCount(_playerCount); // Update UI overlay
+
+            SearchForLevelSpawnPoints();
         }
         else
         {
@@ -114,11 +118,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void SearchForLevelSpawnPoints()
+    {
+        // Search for and update level spawn points
+        SpawnPointsPlayer levelSpawnPoints = FindAnyObjectByType<SpawnPointsPlayer>();
+        if (levelSpawnPoints == null) 
+        { 
+            Debug.LogWarning("Missing script SpawnPointsPlayer on object in scene! - Used for getting children of script as spawn points."); 
+            return;
+        }
+        _spawnPoints = levelSpawnPoints.gameObject.transform.GetComponentsInChildren<Transform>().ToList<Transform>();
+        _spawnPoints.RemoveAt(0); // remove first element in list (parent to spawn points)
+        foreach (Transform t in _spawnPoints) { print(t); }
+    }
+
     private void Awake()
     {
-        if (controlCam == null)
+        if (_controlCam == null)
         {
-            controlCam = GameObject.FindFirstObjectByType<ControlCam>();
+            _controlCam = GetComponent<ControlCam>();
         }
 
         _playerList = new List<PlayerStatus>();
@@ -128,16 +146,27 @@ public class GameManager : MonoBehaviour
     {
         if (Keyboard.current[Key.O].wasPressedThisFrame)
         {
-            Debug.Log("Restarting game");
-            foreach (PlayerStatus playerStatus in _playerList)
-            {
-                playerStatus.PlayerResting();
-                playerStatus.ResetStats();
-                playerStatus.Spawn(spawnPoints[GetSpawnIndex()]);
-                playerStatus.PlayerLives = maxLives;
+            RestartCurrentLevel();
+        }
 
-                UIUpdatePlayerLives(playerStatus.playerIndex);
-            }
+
+        if (Keyboard.current[Key.P].wasPressedThisFrame)
+        {
+            _controlCam.CameraShake(0.4f, 0.5f);
+        }
+    }
+
+    private void RestartCurrentLevel()
+    {
+        Debug.Log("Restarting Current Level");
+        foreach (PlayerStatus playerStatus in _playerList)
+        {
+            playerStatus.PlayerResting();
+            playerStatus.ResetStats();
+            playerStatus.Spawn(_spawnPoints[GetSpawnIndex()]);
+            playerStatus.PlayerLives = maxLives;
+
+            UIUpdatePlayerLives(playerStatus.playerIndex);
         }
     }
 
@@ -178,7 +207,7 @@ public class GameManager : MonoBehaviour
         {
             if (playerStatus.CompareGameObject(playerInput.gameObject))
             {
-                playerStatus.Spawn(spawnPoints[GetSpawnIndex()]);
+                playerStatus.Spawn(_spawnPoints[GetSpawnIndex()]);
 
                 UIUpdatePlayerLives(playerStatus.playerIndex);
                 UIUpdatePlayerSprites();
@@ -188,7 +217,7 @@ public class GameManager : MonoBehaviour
         _playerCount++;
 
         // Add player to camera
-        controlCam.AddTrackingGameObject(playerInput.gameObject);
+        _controlCam.AddTrackingGameObject(playerInput.gameObject);
     }
 
     public int GetSpawnIndex()
@@ -197,7 +226,7 @@ public class GameManager : MonoBehaviour
         int spawnIndex = 0;
         for (int i = 0; i < 10; i++)
         {
-            spawnIndex = Random.Range(0, spawnPoints.Length);
+            spawnIndex = Random.Range(0, _spawnPoints.Count);
             if (spawnIndex != _lastSpawnIndex)
             {
                 _lastSpawnIndex = spawnIndex;
@@ -222,20 +251,23 @@ public class GameManager : MonoBehaviour
 
                 UIUpdatePlayerLives(playerStatus.playerIndex);
 
-                Debug.Log("player life left : " + playerStatus.PlayerLives);
+                //Debug.Log("player life left : " + playerStatus.PlayerLives);
                 if (playerStatus.PlayerLives > 0)
                 {
                     playerStatus.PlayerResting(); // Drops item as well
                     playerStatus.ResetStats();
-                    playerStatus.Spawn(spawnPoints[spawnIndex]); // Spawn also calls player Active
-
+                    playerStatus.Spawn(_spawnPoints[spawnIndex]); // Spawn also calls player Active
+                    
+                    _controlCam.AddTrackingGameObject(playerStatus.playerGO);
                     UIUpdatePlayerLives(playerStatus.playerIndex);
                 }
                 else
                 {
-                    Debug.Log($"--- Player {playerStatus.playerGO.name} Died! ---");
-                    UIplayerDead(playerStatus.playerIndex);
+                    //Debug.Log($"--- Player {playerStatus.playerGO.name} Died! ---");
                     playerStatus.PlayerResting(); // disable player
+                    
+                    _controlCam.RemoveTrackingGameObject(playerStatus.playerGO);
+                    UIplayerDead(playerStatus.playerIndex);
                 }
             }
         }
