@@ -4,6 +4,10 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] UIPlayer[] uiPlayerArray;
+
+
+
     public class PlayerStatus
     {
         public GameObject playerGO;
@@ -12,10 +16,12 @@ public class GameManager : MonoBehaviour
         public Health playerHealth;
         public ItemHandler playerItemHandler;
 
+        public int playerIndex {  get; private set; }
+
         public int PlayerLives { get; set; }
         int playerSprite = 0;
 
-        public PlayerStatus(GameObject newPlayerGO, int lives, int playerSpriteIndex = 0)
+        public PlayerStatus(GameObject newPlayerGO, int lives, int newPlayerIndex ,int playerSpriteIndex = 0)
         {
             playerGO = newPlayerGO;
             PlayerLives = lives;
@@ -24,6 +30,8 @@ public class GameManager : MonoBehaviour
             playerMovement = playerGO.GetComponent<Movement>();
             playerHealth = playerGO.GetComponent<Health>();
             playerItemHandler = playerGO.GetComponent<ItemHandler>();
+
+            playerIndex = newPlayerIndex;
 
             ChangeSprite(playerSprite);
         }
@@ -55,7 +63,7 @@ public class GameManager : MonoBehaviour
 
         public void ResetStats() // On death
         {
-            // Resets all stats on player
+            // Resets all stats on player - aka set all timers to 0 so no mods effect player 
             // also health
             playerGO.GetComponent<Health>().Heal(1000);
         }
@@ -86,7 +94,7 @@ public class GameManager : MonoBehaviour
     List<PlayerStatus> _playerList;
 
     public Transform[] spawnPoints;
-    private int _playerCount;
+    private int _playerCount = 0;
     private int _lastSpawnIndex = 0;
 
 
@@ -97,6 +105,8 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+
+            UIPlayerCount(_playerCount); // Update UI overlay
         }
         else
         {
@@ -125,6 +135,8 @@ public class GameManager : MonoBehaviour
                 playerStatus.ResetStats();
                 playerStatus.Spawn(spawnPoints[GetSpawnIndex()]);
                 playerStatus.PlayerLives = maxLives;
+
+                UIUpdatePlayerLives(playerStatus.playerIndex);
             }
         }
     }
@@ -132,9 +144,12 @@ public class GameManager : MonoBehaviour
     public void AddPlayerToList(GameObject newPlayer)
     {
         // Create a new playerStatus and add to the _playerList
-        PlayerStatus newPlayerStatus = new PlayerStatus(newPlayer, maxLives,_playerCount);
+        PlayerStatus newPlayerStatus = new PlayerStatus(newPlayer, maxLives, _playerCount, _playerCount);
 
         _playerList.Add(newPlayerStatus);
+
+        UIPlayerCount(_playerCount);
+        
     }
 
 
@@ -164,6 +179,9 @@ public class GameManager : MonoBehaviour
             if (playerStatus.CompareGameObject(playerInput.gameObject))
             {
                 playerStatus.Spawn(spawnPoints[GetSpawnIndex()]);
+
+                UIUpdatePlayerLives(playerStatus.playerIndex);
+                UIUpdatePlayerSprites();
             }
         }
 
@@ -201,17 +219,22 @@ public class GameManager : MonoBehaviour
             if (playerStatus.CompareGameObject(deadPlayer)) 
             {
                 playerStatus.PlayerLives -= 1;
+
+                UIUpdatePlayerLives(playerStatus.playerIndex);
+
                 Debug.Log("player life left : " + playerStatus.PlayerLives);
                 if (playerStatus.PlayerLives > 0)
                 {
                     playerStatus.PlayerResting(); // Drops item as well
                     playerStatus.ResetStats();
                     playerStatus.Spawn(spawnPoints[spawnIndex]); // Spawn also calls player Active
+
+                    UIUpdatePlayerLives(playerStatus.playerIndex);
                 }
                 else
                 {
                     Debug.Log($"--- Player {playerStatus.playerGO.name} Died! ---");
-                    //playerStatus.playerGO.SetActive(false); // disable player
+                    UIplayerDead(playerStatus.playerIndex);
                     playerStatus.PlayerResting(); // disable player
                 }
             }
@@ -219,5 +242,46 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // UI Stuff
+    private void UIPlayerCount(int nrOfPlayers)
+    {
+        Debug.Log("Updating Player Count UI");
+        for (int i = 0; i < 4; i++) 
+        {
+            Debug.Log($"Updating Player Count UI {i}");
+            if (i <= nrOfPlayers)
+            {
+                Debug.Log($"{i} : true");
+                uiPlayerArray[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log($"{i} : false");
+                uiPlayerArray[i].gameObject.SetActive(false);
+            }
+        }
+    }
 
+    private void UIUpdatePlayerLives(int index)
+    {
+        uiPlayerArray[index].SetAlive();
+        uiPlayerArray[index].SetMaxLife(maxLives);
+        uiPlayerArray[index].SetCurrentLife(_playerList[index].PlayerLives);
+
+    }
+    private void UIplayerDead(int index)
+    {
+        uiPlayerArray[index].SetMaxLife(maxLives);
+        uiPlayerArray[index].SetCurrentLife(_playerList[index].PlayerLives);
+        uiPlayerArray[index].SetDeath();
+    }
+
+    private void UIUpdatePlayerSprites()
+    {
+        for (int i = 0; i < _playerList.Count; i++)
+        {
+            Sprite playerSprite = _playerList[i].playerStats.GetCurrentSprite();
+            uiPlayerArray[i].SetSprite(playerSprite);
+        }
+    }
 }

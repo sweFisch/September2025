@@ -6,8 +6,11 @@ public class UIPlayer : MonoBehaviour
 {
 
     [SerializeField] Image _image;
+    [SerializeField] Image _livesImage;
     [SerializeField] TextMeshProUGUI _textMeshProUGUI;
     [SerializeField] Transform _livesBox;
+    
+    [SerializeField] private Transform deathSprite;
 
     public void SetSprite(Sprite sprite)
     {
@@ -20,21 +23,24 @@ public class UIPlayer : MonoBehaviour
         _textMeshProUGUI.text = newtext;
     }
 
-    public void SetMaxlife(int nrOfLives)
+    public void SetMaxLife(int nrOfLives)
     {
-        Transform lifeChild = _livesBox.GetComponentInChildren<Transform>(true);
-        
+        Transform lifeChild = _livesBox.GetComponentInChildren<Transform>();
+
         for (int i = _livesBox.childCount; i < nrOfLives; i++) 
         {
-            Instantiate(lifeChild, _livesBox);
+            print("making box??");
+            Instantiate(_livesImage, _livesBox);
         }
     }
 
 
     public void SetCurrentLife(int currentLife)
     {
-        Transform[] allLives = _livesBox.GetComponentsInChildren<Transform>(true);
-        
+        Transform[] allLives = _livesBox.GetComponentsInChildren<Transform>();
+
+        print(allLives.Length); // TODO
+
         currentLife = Mathf.Clamp(currentLife, 0, allLives.Length);
 
         for (int i = 0; i < allLives.Length; i++)
@@ -52,7 +58,15 @@ public class UIPlayer : MonoBehaviour
 
     public void SetDeath()
     {
-        // Set blood puddle texture 
+        // Set blood puddle texture
+        // Set player UI status to Dead
+        Debug.Log("Player UI object set death");
+        deathSprite.gameObject.SetActive(true);
+    }
+
+    public void SetAlive()
+    {
+        deathSprite.gameObject.SetActive(false);
     }
 
 }

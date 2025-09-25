@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Stats : MonoBehaviour
@@ -71,6 +72,11 @@ public class Stats : MonoBehaviour
     {
         _index = index;
         SetSprite();
+    }
+
+    public Sprite GetCurrentSprite()
+    {
+        return _spriteRenderer.sprite;
     }
 
     public void SetBloodSprite()
