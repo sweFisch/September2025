@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ControlCam : MonoBehaviour
@@ -12,9 +14,13 @@ public class ControlCam : MonoBehaviour
     public float _smoothTime = 0.3f;
     private Vector3 _velocity = Vector3.zero;
 
+    Bounds _levelBounds;
+    [SerializeField] BoxCollider2D _boxColliderBounds;
+
     void Start()
     {
         //_camera = Camera.main;
+        _levelBounds = _boxColliderBounds.bounds;
     }
 
     private (Vector3 center, float size) CalculateOrthoSize()
@@ -36,14 +42,62 @@ public class ControlCam : MonoBehaviour
 
         bounds.Expand(_bufferAroundObjects);
 
+        bounds = ClampBounds(bounds);
+
         float vertical = bounds.size.y;
         float horizontal = bounds.size.x;
 
-        var size = Mathf.Max(horizontal, vertical) * 0.6f; // Get the half size for ortographic camera  OBS testing outside 0.5
+        print($"{vertical} : {horizontal}   --- bounds SIZE");
+
+        var size = Mathf.Max(horizontal, vertical) * 0.5f; // Get the half size for ortographic camera  OBS testing outside 0.5
         var center = bounds.center + new Vector3(0, 0, -10); // get center and offset so camera is not at zero
+
+        //Test level bounds
+        //vertical = _levelBounds.extents.y;
+        //horizontal = _levelBounds.extents.x;
+
+
+        //center = _levelBounds.center + new Vector3(0, 0, -10);
+        //size = vertical * 0.5f; //Mathf.Max(horizontal, vertical) * 0.5f;
 
         return (center, size);
 
+    }
+
+    private Bounds ClampBounds(Bounds boundToClamp)
+    {
+        //Vector3 pointMax = new Vector3(boundToClamp.extents.x + boundToClamp.center.x, boundToClamp.extents.y + boundToClamp.center.y, 0f);
+        //Vector3 pointMin = new Vector3(-boundToClamp.extents.x + boundToClamp.center.x, -boundToClamp.extents.y + boundToClamp.center.y, 0f);
+        
+        Vector3 pointMax = new Vector3(boundToClamp.size.x * 0.5f, boundToClamp.size.y * 0.5f, 0f);
+        Vector3 pointMin = new Vector3(-boundToClamp.size.x * 0.5f, -boundToClamp.size.y * 0.5f, 0f);
+
+        print(pointMax);
+        print(pointMin);
+
+        pointMax = ReturnPointInsideLevelBounds(pointMax);
+        pointMin = ReturnPointInsideLevelBounds(pointMin);
+        
+        print(pointMax);
+        print(pointMin);
+
+        Bounds bounds = new Bounds(pointMax, Vector3.one);
+        bounds.Encapsulate(pointMin);
+
+        return bounds;
+    }
+
+    private Vector3 ReturnPointInsideLevelBounds(Vector3 pos)
+    {
+        // Clamp pos x y to level bounds
+        pos = new Vector3(Mathf.Clamp(pos.x,
+            -_levelBounds.extents.x + _levelBounds.center.x,
+            _levelBounds.extents.x + _levelBounds.center.x),
+            Mathf.Clamp(pos.y,
+            -_levelBounds.extents.y + _levelBounds.center.y,
+            _levelBounds.extents.y + _levelBounds.center.y),
+            0f);
+        return pos;
     }
 
     void LateUpdate()
