@@ -148,10 +148,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
-        //playerInput.transform.position = spawnPoints[_playerCount].transform.position;
-        playerInput.transform.position = spawnPoints[GetSpawnIndex()].transform.position; // Get random spawn point - ToDO Remove? and change to new
-
         // check if already in game? Disable inputs in another way ?
         Debug.Log(playerInput);
         Debug.Log(playerInput.gameObject);
@@ -161,9 +157,15 @@ public class GameManager : MonoBehaviour
             // First player behavior
         }
 
-
+        // Create a Player Status object in List and use that to Spawn
         AddPlayerToList(playerInput.gameObject);
-        //playerInput.GetComponent<Stats>().SetSprite(_playerCount); // Set player Sprite Look - TODO lookup after the sprite choosen
+        foreach (PlayerStatus playerStatus in _playerList)
+        {
+            if (playerStatus.CompareGameObject(playerInput.gameObject))
+            {
+                playerStatus.Spawn(spawnPoints[GetSpawnIndex()]);
+            }
+        }
 
         _playerCount++;
 
