@@ -167,6 +167,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8597894168679743845, guid: 00cac5695ed908c47bf6e4c2f8e5ca04, type: 3}
+      propertyPath: cooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8682299823367244047, guid: 00cac5695ed908c47bf6e4c2f8e5ca04, type: 3}
       propertyPath: m_Name
       value: Wand (1)

@@ -341,10 +341,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponItem
   maxThrowSpeed: 20
   toughness: 10
+  useParticle: {fileID: 0}
+  useParticleColor: {r: 1, g: 1, b: 1, a: 1}
   owned: 0
   rb: {fileID: 4955544229096342584}
   _playerVelocity: {x: 0, y: 0}
   _spriteRenderer: {fileID: 7765453118602036753}
+  cooldown: 0
+  ammo: 20
   _firePoint: {fileID: 4979639087885164202}
   bullet: {fileID: 8748705075221606476, guid: 174867b2b040ec34ea034881e1119396, type: 3}
 --- !u!50 &4955544229096342584
