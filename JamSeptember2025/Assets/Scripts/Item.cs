@@ -8,6 +8,9 @@ public class Item : MonoBehaviour
     public float maxThrowSpeed = 20;
     public float toughness = 20;
 
+    public GameObject useParticle; //implement this <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    public Color useParticleColor = Color.white;
+
     public bool owned;
     public Rigidbody2D rb;
 
@@ -97,6 +100,15 @@ public class Item : MonoBehaviour
     {
         owned = held;
         boxCollider.enabled = !held;
+    }
+
+    protected void UseParticle(Transform point)
+    {
+        if (useParticle == null) { return; }
+        GameObject tempParticle = Instantiate(useParticle, point.position, point.rotation);
+        ParticleSystem ps = tempParticle.GetComponent<ParticleSystem>();
+        var main = ps.main;                                                        //we need to get main this way because unity is stupid
+        main.startColor = new Color(useParticleColor.r, useParticleColor.g, useParticleColor.b, main.startColor.color.a);
     }
 
 }

@@ -199,15 +199,20 @@ MonoBehaviour:
   airDecelerationBase: 30
   maxSpeedBase: 14
   accelerationBase: 120
-  jumpPowerMod: 1
-  maxFallSpeedMod: 1
-  fallAccelerationMod: 1
-  groundDecelerationMod: 1
-  airDecelerationMod: 1
-  maxSpeedMod: 1
-  accelerationMod: 1
+  jumpPowerMod: 2
+  maxFallSpeedMod: 2
+  fallAccelerationMod: 2
+  groundDecelerationMod: 2
+  airDecelerationMod: 2
+  maxSpeedMod: 2
+  accelerationMod: 2
   _healthScript: {fileID: -6478338172818070207}
   maxHealth: 100
+  moveSpeedBuffTimer: 0
+  moveSpeedDebuffTimer: 0
+  gravityIncreaseTimer: 0
+  gravityDecreaseTimer: 0
+  jumpBuffTimer: 0
 --- !u!50 &4431058896912651738
 Rigidbody2D:
   serializedVersion: 5
@@ -317,6 +322,8 @@ MonoBehaviour:
   _currentHealth: 100
   _maxHealth: 100
   _deathEffect: {fileID: 2532527049161566064, guid: 56da4ba49fe854749bf76694776d9e29, type: 3}
+  _damageParticle: {fileID: 6023402507962888236, guid: 355ca99a3c0bd3348aee4d7296b8b3a6, type: 3}
+  _deathParticle: {fileID: 3854649239672454248, guid: 207a9de0e9dffbe4384189dfb5c5d6f7, type: 3}
 --- !u!1 &3302730718766745850
 GameObject:
   m_ObjectHideFlags: 0
