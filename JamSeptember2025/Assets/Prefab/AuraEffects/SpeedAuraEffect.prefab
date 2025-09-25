@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -5
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.90834904, a: 0.16078432}
+  m_Color: {r: 0, g: 1, b: 0.45882353, a: 0.16078432}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 4882817703919202486}
   - component: {fileID: 2119818852640989652}
   m_Layer: 0
-  m_Name: AuraEffect
+  m_Name: SpeedAuraEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 4238506402798093884}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.52, y: 1.37, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5.38, y: 5.38, z: 5.38}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6196755b397a0d34f82627c2b11c6d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  color: {r: 0, g: 1, b: 0.9098039, a: 0.16078432}
+  color: {r: 0, g: 1, b: 0.45859146, a: 0.16078432}
   radius: 5
   effect: 0
   AuraDurration: 7

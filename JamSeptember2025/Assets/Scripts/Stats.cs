@@ -7,6 +7,9 @@ public class Stats : MonoBehaviour
     {
         SpeedUp = 0,
         SpeedDown = 1,
+        GravityUp = 2,
+        GravityDown = 3,
+        JumpUp = 4
     }
 
 
@@ -81,6 +84,34 @@ public class Stats : MonoBehaviour
         moveSpeedBuffTimer = Math.Max(moveSpeedBuffTimer, buffDuration + Time.time) ;
     }
 
+    public float moveSpeedDebuffTimer;
+    public void AddMoveSpeedDeuff(float buffDuration)
+    {
+        print("used slow");
+        moveSpeedDebuffTimer = Math.Max(moveSpeedDebuffTimer, buffDuration + Time.time);
+    }
+
+    public float gravityIncreaseTimer;
+    public void AddGravityIncrease(float buffDuration)
+    {
+        print("used speed");
+        gravityIncreaseTimer = Math.Max(gravityIncreaseTimer, buffDuration + Time.time);
+    }
+
+    public float gravityDecreaseTimer;
+    public void AddGravityDecrease(float buffDuration)
+    {
+        print("used speed");
+        gravityDecreaseTimer = Math.Max(gravityDecreaseTimer, buffDuration + Time.time);
+    }
+
+    public float jumpBuffTimer;
+    public void AddJumpBuff(float buffDuration)
+    {
+        print("used speed");
+        jumpBuffTimer = Math.Max(jumpBuffTimer, buffDuration + Time.time);
+    }
+
     public void BuffPicker(StatusEffects buff, float buffDuration)
     {
         switch (buff)
@@ -89,7 +120,16 @@ public class Stats : MonoBehaviour
                 AddMoveSpeedBuff(buffDuration);
                 break;
             case StatusEffects.SpeedDown:
-
+                AddMoveSpeedDeuff(buffDuration);
+                break;
+            case StatusEffects.GravityUp:
+                AddGravityIncrease(buffDuration);
+                break;
+            case StatusEffects.GravityDown:
+                AddGravityDecrease(buffDuration);
+                break;
+            case StatusEffects.JumpUp:
+                AddJumpBuff(buffDuration);
                 break;
             default:
                 break;
@@ -109,8 +149,11 @@ public class Stats : MonoBehaviour
         AccelerationValue = accelerationBase;
 
 
-        if ( Time.time < moveSpeedBuffTimer) { MaxSpeedValue = maxSpeedBase * maxSpeedMod; } // value = base * mod
-        
+        if (Time.time < moveSpeedBuffTimer) { MaxSpeedValue = MaxSpeedValue * maxSpeedMod; } // value = base * mod
+        if (Time.time < moveSpeedDebuffTimer) { MaxSpeedValue = MaxSpeedValue / maxSpeedMod; }
+        if (Time.time < gravityIncreaseTimer) { FallAccelerationValue = FallAccelerationValue * MaxFallSpeedValue; }
+        if (Time.time < gravityDecreaseTimer) { FallAccelerationValue = FallAccelerationValue / MaxFallSpeedValue; }
+        if (Time.time < jumpBuffTimer) { JumpPowerValue = JumpPowerValue * jumpPowerMod; }
 
     }
 }
