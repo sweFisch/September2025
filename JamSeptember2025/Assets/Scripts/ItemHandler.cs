@@ -24,6 +24,11 @@ public class ItemHandler : MonoBehaviour
         _playerMovement = GetComponent<Movement>();
     }
 
+    private void OnDisable()
+    {
+        DropHeldItems();
+    }
+
     // Handle input for Items
     public void OnInteract(InputValue val)
     {
@@ -47,7 +52,15 @@ public class ItemHandler : MonoBehaviour
         {
             //shove.Use()
         }
+    }
 
+    public void DropHeldItems()
+    {
+        if (_item != null)
+        {
+            _item.Drop();
+            _item = null;
+        }
     }
 
     private void Update()

@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2502c03254e6104aafbc15dad925ab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  splashEffect: {fileID: 8682299823367244047, guid: 00cac5695ed908c47bf6e4c2f8e5ca04, type: 3}
+  _damage: 34
 --- !u!1 &7784830110204348140
 GameObject:
   m_ObjectHideFlags: 0

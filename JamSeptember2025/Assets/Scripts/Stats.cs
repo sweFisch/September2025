@@ -9,7 +9,7 @@ public class Stats : MonoBehaviour
         SpeedDown = 1,
     }
 
-
+    [SerializeField] Sprite _bloodStain;
     [SerializeField] Sprite[] _playerSprites;
     [SerializeField] int _index = 0;
     [SerializeField] SpriteRenderer _spriteRenderer;
@@ -71,6 +71,11 @@ public class Stats : MonoBehaviour
     {
         _index = index;
         SetSprite();
+    }
+
+    public void SetBloodSprite()
+    {
+        _spriteRenderer.sprite = _bloodStain;
     }
 
 

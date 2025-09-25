@@ -178,7 +178,7 @@ public class Movement : MonoBehaviour
         // Check for short jump press - early release
         if (!_endedJumpEarly && !_isGrounded && !_jumpIsPressed && _rb.linearVelocity.y > 0) 
         {
-            Debug.Log("Ended Jump Early!");
+            //Debug.Log("Ended Jump Early!");
             _endedJumpEarly = true; 
         }
 
@@ -189,7 +189,7 @@ public class Movement : MonoBehaviour
         // Check grounded
         if (_isGrounded || CanUseCoyote) // Or Coyote jump (_isGroudnded || CanUseCoyote)
         {
-            if (CanUseCoyote) { Debug.Log("CoyoteTime used"); }
+            //if (CanUseCoyote) { Debug.Log("CoyoteTime used"); }
             Executejump();
         }
 
