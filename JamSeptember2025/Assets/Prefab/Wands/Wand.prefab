@@ -351,6 +351,7 @@ MonoBehaviour:
   ammo: 20
   _firePoint: {fileID: 4979639087885164202}
   bullet: {fileID: 8748705075221606476, guid: 174867b2b040ec34ea034881e1119396, type: 3}
+  outOfAmmoEffect: {fileID: 2906905671869415875, guid: 381a18817ccc7544db21a830c3c43bca, type: 3}
 --- !u!50 &4955544229096342584
 Rigidbody2D:
   serializedVersion: 5

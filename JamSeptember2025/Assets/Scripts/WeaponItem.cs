@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponItem : Item
@@ -7,7 +8,7 @@ public class WeaponItem : Item
     [SerializeField] float ammo;
 
 
-
+    float despawntimer;
 
     [SerializeField] Transform _firePoint;
 
@@ -26,12 +27,26 @@ public class WeaponItem : Item
             UseParticle(_firePoint);
         } else if (ammo <= 0)
         {
-            Instantiate(outOfAmmoEffect,transform.position,Quaternion.identity);
+            Instantiate(outOfAmmoEffect,_firePoint.position,Quaternion.identity);
         }
     }
 
     public override void Mishap()
     {
         Use();
+    }
+
+    private void Update()
+    {
+        if (ammo <= 0 && !owned)
+        {
+            despawntimer -= Time.deltaTime;
+            if (despawntimer < 0)
+            {
+                Instantiate(outOfAmmoEffect, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
+        }
+        else { despawntimer = 5; }
     }
 }
