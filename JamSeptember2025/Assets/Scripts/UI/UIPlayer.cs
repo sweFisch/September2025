@@ -45,7 +45,7 @@ public class UIPlayer : MonoBehaviour
 
         for (int i = 0; i < allLives.Length; i++)
         {
-            if (i < currentLife)
+            if (i <= currentLife)
             {
                 allLives[i].gameObject.SetActive(true);
             }
