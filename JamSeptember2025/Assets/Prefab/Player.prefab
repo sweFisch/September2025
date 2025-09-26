@@ -181,15 +181,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Stats
   _bloodStain: {fileID: 21300000, guid: 9c52151ff7198a54eba6453090478762, type: 3}
   _playerSprites:
+  - {fileID: 21300000, guid: 366a7f85acbcf1d44b2127afb66d7f6a, type: 3}
+  - {fileID: 21300000, guid: cb12ef90a55956d4b903611f3904571c, type: 3}
+  - {fileID: 21300000, guid: 2ab05246f79192e4994f27c3f80b1fe2, type: 3}
+  - {fileID: 21300000, guid: 94b16cd19c88c4248848a1c7ba26704e, type: 3}
+  - {fileID: 21300000, guid: 4d86df27e3156b343badda0196a9f1c3, type: 3}
   - {fileID: 21300000, guid: cdbbc9b124cc1ff4a8ea6f5331fa3890, type: 3}
   - {fileID: 21300000, guid: fa7922262b669724ba7538ec09cc25bc, type: 3}
   - {fileID: 21300000, guid: 1db01dd860f3b3b43a13f9909f2f635f, type: 3}
   - {fileID: 21300000, guid: eab9682350b2f4f4f85df6a5d9e93598, type: 3}
-  - {fileID: 21300000, guid: cb12ef90a55956d4b903611f3904571c, type: 3}
-  - {fileID: 21300000, guid: 94b16cd19c88c4248848a1c7ba26704e, type: 3}
-  - {fileID: 21300000, guid: 366a7f85acbcf1d44b2127afb66d7f6a, type: 3}
-  - {fileID: 21300000, guid: 2ab05246f79192e4994f27c3f80b1fe2, type: 3}
-  - {fileID: 21300000, guid: 4d86df27e3156b343badda0196a9f1c3, type: 3}
   _index: 6
   _spriteRenderer: {fileID: 782655001848262615}
   jumpPowerBase: 36
