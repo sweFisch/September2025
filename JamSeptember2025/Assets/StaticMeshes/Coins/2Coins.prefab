@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 280472147628411753}
   - component: {fileID: 6483017374578141024}
   - component: {fileID: -5721838016281435151}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 2Coins
   m_TagString: Untagged
   m_Icon: {fileID: 0}

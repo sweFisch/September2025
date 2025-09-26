@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 7376845293783109350}
   - component: {fileID: 4955544229096342584}
   - component: {fileID: 9076881744100539688}
-  - component: {fileID: 6049570133158753087}
+  - component: {fileID: 4361452170555131778}
   m_Layer: 0
   m_Name: Bounce_Rod
   m_TagString: Untagged
@@ -390,7 +390,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.23, y: 0}
   m_Radius: 1
---- !u!114 &6049570133158753087
+--- !u!114 &4361452170555131778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -399,14 +399,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8682299823367244047}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030b6ab7c69bb991e9eeb5d1bf0ef73f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d0a6613775be4e4a9055eb47db6350a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponBouncyBalls
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponItem
   maxThrowSpeed: 20
   toughness: 20
+  useParticle: {fileID: 0}
+  useParticleColor: {r: 1, g: 1, b: 1, a: 1}
   owned: 0
   rb: {fileID: 0}
   _playerVelocity: {x: 0, y: 0}
-  _spriteRenderer: {fileID: 7765453118602036753}
+  _spriteRenderer: {fileID: 0}
+  cooldown: 0.1
+  ammo: 10
   _firePoint: {fileID: 4979639087885164202}
   bullet: {fileID: 8748705075221606476, guid: abd8ba83aa8f49de1a65712b9823a315, type: 3}
+  outOfAmmoEffect: {fileID: 2906905671869415875, guid: 381a18817ccc7544db21a830c3c43bca, type: 3}

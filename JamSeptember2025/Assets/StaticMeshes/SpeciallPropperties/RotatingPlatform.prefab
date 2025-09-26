@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 169709685699560104}
   - component: {fileID: 7392746965512855904}
   - component: {fileID: 919322351464255612}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Block (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 8322459655217606114}
   - component: {fileID: 5371059997254881718}
   - component: {fileID: 2163064375866302845}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 6451156963556503733}
   - component: {fileID: 6976863971890856410}
   - component: {fileID: 2578411029426458879}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Block (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8405075667900281475}
   - component: {fileID: 5774439255140462094}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RotationPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8169091075465480789}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RotatingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +505,7 @@ GameObject:
   - component: {fileID: 2305140449003218404}
   - component: {fileID: 5520753954770967410}
   - component: {fileID: 5580672473333240772}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Block (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 2795528532593447028}
   - component: {fileID: 1422685163768156968}
   - component: {fileID: 2206000026644728513}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Block (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

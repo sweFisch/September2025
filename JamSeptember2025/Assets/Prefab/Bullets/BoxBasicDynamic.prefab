@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4766796547126950609}
   - component: {fileID: 2992247215719977485}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 9198111748794167694}
   - component: {fileID: -8552203097561674608}
   - component: {fileID: -7965479092043370347}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BoxBasicDynamic
   m_TagString: Untagged
   m_Icon: {fileID: 0}

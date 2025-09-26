@@ -101,8 +101,8 @@ GameObject:
   - component: {fileID: 99952920419433112}
   - component: {fileID: 9198111748794167694}
   - component: {fileID: -5376805436689746070}
-  - component: {fileID: -4113647600038672354}
   - component: {fileID: 4647694068802347404}
+  - component: {fileID: -5411334162509488689}
   m_Layer: 0
   m_Name: BouncyBall
   m_TagString: Untagged
@@ -189,21 +189,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.2
---- !u!114 &-4113647600038672354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8748705075221606476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9472f25101c24fe5f85887c0802869f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BulletBouncyBall
-  bulletVel: 15
-  _damage: 25
-  aliveTime: 4
 --- !u!58 &4647694068802347404
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -240,3 +225,20 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.145
+--- !u!114 &-5411334162509488689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748705075221606476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00152569e2264e34aaf40af04d563e86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  bulletVel: 20
+  _damage: 34
+  destroyOnCollision: 0
+  bulletLifetime: 3
+  endEffect: {fileID: 4367474284569643219, guid: c91b78c0d751fb34bb4274a03f990385, type: 3}
