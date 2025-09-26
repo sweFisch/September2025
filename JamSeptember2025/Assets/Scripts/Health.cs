@@ -20,6 +20,7 @@ public class Health : MonoBehaviour
     public void TakeDamage(float value)
     {
         _currentHealth -= value;
+        GameManager.Instance._controlCam.CameraShake(0.2f, 0.3f);
         if ( _currentHealth <= 0)
         {
             Debug.Log($"Dead : {gameObject.name}");

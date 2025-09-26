@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; } // Singelton
 
-    [SerializeField] private ControlCam _controlCam; // Camera controller, keeping players in view
+    [SerializeField] public ControlCam _controlCam; // Camera controller, keeping players in view
 
     List<PlayerStatus> _playerList;
 
