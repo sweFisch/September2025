@@ -3,6 +3,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+using UnityEngine.SceneManagement;
+
 public class GameManager : MonoBehaviour
 {
     [SerializeField] UIPlayer[] uiPlayerArray;
@@ -153,6 +155,13 @@ public class GameManager : MonoBehaviour
         if (Keyboard.current[Key.P].wasPressedThisFrame)
         {
             _controlCam.CameraShake(0.4f, 0.5f);
+        }
+
+
+        if (Keyboard.current[Key.Escape].wasPressedThisFrame || Keyboard.current[Key.Digit0].wasPressedThisFrame)
+        {
+            Debug.Log("Escape Pressed");
+            SceneManager.LoadScene(0);
         }
     }
 
