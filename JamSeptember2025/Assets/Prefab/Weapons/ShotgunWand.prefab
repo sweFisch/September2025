@@ -227,7 +227,7 @@ MonoBehaviour:
   _playerVelocity: {x: 0, y: 0}
   _spriteRenderer: {fileID: 938601128027027780}
   cooldown: 1
-  ammo: 20
+  ammo: 8
   _firePoint: {fileID: 9187406410717917465}
   bullet: {fileID: 750959953155332327, guid: e476e9a66929a5d4bb9eb267f3027135, type: 3}
   outOfAmmoEffect: {fileID: 2906905671869415875, guid: 381a18817ccc7544db21a830c3c43bca, type: 3}
