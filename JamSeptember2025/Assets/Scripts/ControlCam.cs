@@ -9,27 +9,60 @@ public class ControlCam : MonoBehaviour
 
     public List<GameObject> gameObjectList;
 
-    public float _bufferAroundObjects = 2f;
+    public float _bufferAroundObjects = 8f;
 
-    public float _smoothTime = 0.3f;
+    public float _smoothTime = 0.2f;
     private Vector3 _velocity = Vector3.zero;
 
-    Bounds _levelBounds;
-    [SerializeField] BoxCollider2D _boxColliderBounds;
+    //Bounds _levelBounds;
+    //[SerializeField] BoxCollider2D _boxColliderBounds;
+
+    [SerializeField] Bounds _bounds;
 
     void Start()
     {
         //_camera = Camera.main;
-        _levelBounds = _boxColliderBounds.bounds;
+        //_levelBounds = _boxColliderBounds.bounds;
     }
 
     private (Vector3 center, float size) CalculateOrthoSize()
     {
-        Bounds bounds = new Bounds(Vector3.zero,Vector3.one);
+        _bounds = new Bounds(Vector3.zero,Vector3.one);
 
         if(gameObjectList.Count > 0)
         {
-            bounds = new Bounds(gameObjectList[0].transform.position,Vector3.one);
+            _bounds = new Bounds(gameObjectList[0].transform.position,Vector3.one);
+
+            foreach (GameObject go in gameObjectList)
+            {
+                if (go != null)
+                {
+                    _bounds.Encapsulate(go.transform.position);
+                }
+            }
+        }
+
+        _bounds.Expand(_bufferAroundObjects);
+
+        //_bounds = ClampBounds(_bounds);
+
+        float vertical = _bounds.size.y;
+        float horizontal = _bounds.size.x;
+
+        var size = Mathf.Max(horizontal, vertical) * 0.5f; // Get the half size for ortographic camera  OBS testing outside 0.5
+        var center = _bounds.center + new Vector3(0, 0, -10); // get center and offset so camera is not at zero
+
+        return (center, size);
+
+    }
+
+    private Bounds CalculateBoundsOfPlayers()
+    {
+        Bounds bounds = new Bounds(Vector3.zero, Vector3.one);
+
+        if (gameObjectList.Count > 0)
+        {
+            bounds = new Bounds(gameObjectList[0].transform.position, Vector3.one);
 
             foreach (GameObject go in gameObjectList)
             {
@@ -40,28 +73,7 @@ public class ControlCam : MonoBehaviour
             }
         }
 
-        bounds.Expand(_bufferAroundObjects);
-
-        bounds = ClampBounds(bounds);
-
-        float vertical = bounds.size.y;
-        float horizontal = bounds.size.x;
-
-        print($"{vertical} : {horizontal}   --- bounds SIZE");
-
-        var size = Mathf.Max(horizontal, vertical) * 0.5f; // Get the half size for ortographic camera  OBS testing outside 0.5
-        var center = bounds.center + new Vector3(0, 0, -10); // get center and offset so camera is not at zero
-
-        //Test level bounds
-        //vertical = _levelBounds.extents.y;
-        //horizontal = _levelBounds.extents.x;
-
-
-        //center = _levelBounds.center + new Vector3(0, 0, -10);
-        //size = vertical * 0.5f; //Mathf.Max(horizontal, vertical) * 0.5f;
-
-        return (center, size);
-
+        return bounds;
     }
 
     private Bounds ClampBounds(Bounds boundToClamp)
@@ -69,19 +81,18 @@ public class ControlCam : MonoBehaviour
         //Vector3 pointMax = new Vector3(boundToClamp.extents.x + boundToClamp.center.x, boundToClamp.extents.y + boundToClamp.center.y, 0f);
         //Vector3 pointMin = new Vector3(-boundToClamp.extents.x + boundToClamp.center.x, -boundToClamp.extents.y + boundToClamp.center.y, 0f);
         
-        Vector3 pointMax = new Vector3(boundToClamp.size.x * 0.5f, boundToClamp.size.y * 0.5f, 0f);
-        Vector3 pointMin = new Vector3(-boundToClamp.size.x * 0.5f, -boundToClamp.size.y * 0.5f, 0f);
+        Vector3 pointMax = boundToClamp.max;
+        Vector3 pointMin = boundToClamp.min;
 
-        print(pointMax);
-        print(pointMin);
+        Debug.DrawLine(pointMin,pointMax,Color.red);
+        
 
         pointMax = ReturnPointInsideLevelBounds(pointMax);
         pointMin = ReturnPointInsideLevelBounds(pointMin);
-        
-        print(pointMax);
-        print(pointMin);
 
-        Bounds bounds = new Bounds(pointMax, Vector3.one);
+        Debug.DrawLine(pointMin, pointMax, Color.green);
+
+        Bounds bounds = new Bounds(pointMax,Vector3.zero);
         bounds.Encapsulate(pointMin);
 
         return bounds;
@@ -90,21 +101,40 @@ public class ControlCam : MonoBehaviour
     private Vector3 ReturnPointInsideLevelBounds(Vector3 pos)
     {
         // Clamp pos x y to level bounds
-        pos = new Vector3(Mathf.Clamp(pos.x,
-            -_levelBounds.extents.x + _levelBounds.center.x,
-            _levelBounds.extents.x + _levelBounds.center.x),
-            Mathf.Clamp(pos.y,
-            -_levelBounds.extents.y + _levelBounds.center.y,
-            _levelBounds.extents.y + _levelBounds.center.y),
-            0f);
+        //pos = new Vector3(Mathf.Clamp(pos.x,
+        //    -_levelBounds.extents.x + _levelBounds.center.x,
+        //    _levelBounds.extents.x + _levelBounds.center.x),
+        //    Mathf.Clamp(pos.y,
+        //    -_levelBounds.extents.y + _levelBounds.center.y,
+        //    _levelBounds.extents.y + _levelBounds.center.y),
+        //    0f);
+
+
         return pos;
     }
 
     void LateUpdate()
     {
-        //var (center, size) = CalculateOrthoSize();
-        Camera.main.orthographicSize = CalculateOrthoSize().size;
-        Vector3 preferedCameraPos = CalculateOrthoSize().center;
+        
+        //Camera.main.orthographicSize = CalculateOrthoSize().size;
+        //Vector3 preferedCameraPos = CalculateOrthoSize().center;
+        
+        _bounds = CalculateBoundsOfPlayers();
+        _bounds.Expand(_bufferAroundObjects);
+
+        var center = _bounds.center + new Vector3(0, 0, -10);
+        Vector3 preferedCameraPos = center;
+
+
+        if (_bounds.extents.x > _bounds.extents.y * Camera.main.aspect)
+        {
+            Camera.main.orthographicSize = _bounds.extents.x / Camera.main.aspect;
+        }
+        else
+        {
+            Camera.main.orthographicSize = _bounds.extents.y;
+        }
+
 
         // Camera Shake
         if (Time.time < shakeTotalDurationTimer)
@@ -128,7 +158,7 @@ public class ControlCam : MonoBehaviour
         shakeTotalDurationTimer = Time.time + duration;
         stepTimer = Time.time + shakeSteps;
     }
-    public void ApplyCameraShake(Vector3 actualPosition)
+    private void ApplyCameraShake(Vector3 actualPosition)
     {
         if (Time.time > stepTimer) 
         {
@@ -143,6 +173,8 @@ public class ControlCam : MonoBehaviour
 
     public void AddTrackingGameObject(GameObject newGameObject)
     {
+        if (gameObjectList.Contains(newGameObject)) { return; }
+
         gameObjectList.Add(newGameObject);
     }
 
@@ -154,5 +186,10 @@ public class ControlCam : MonoBehaviour
     public void ClearTackingGameObjectList()
     {
         gameObjectList.Clear();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(_bounds.center, _bounds.size);
     }
 }

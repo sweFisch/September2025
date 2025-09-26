@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
         public Health playerHealth;
         public ItemHandler playerItemHandler;
 
-        public int playerIndex {  get; private set; }
+        public int PlayerIndex {  get; private set; }
 
         public int PlayerLives { get; set; }
         int playerSprite = 0;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
             playerHealth = playerGO.GetComponent<Health>();
             playerItemHandler = playerGO.GetComponent<ItemHandler>();
 
-            playerIndex = newPlayerIndex;
+            PlayerIndex = newPlayerIndex;
 
             ChangeSprite(playerSprite);
         }
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int maxLives = 3;
+    public int _maxLives = 3;
 
 
     public static GameManager Instance { get; private set; } // Singelton
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
         }
         _spawnPoints = levelSpawnPoints.gameObject.transform.GetComponentsInChildren<Transform>().ToList<Transform>();
         _spawnPoints.RemoveAt(0); // remove first element in list (parent to spawn points)
-        foreach (Transform t in _spawnPoints) { print(t); }
+        //foreach (Transform t in _spawnPoints) { print(t); }
     }
 
     private void Awake()
@@ -158,22 +158,24 @@ public class GameManager : MonoBehaviour
 
     private void RestartCurrentLevel()
     {
-        Debug.Log("Restarting Current Level");
+        //Debug.Log("Restarting Current Level");
         foreach (PlayerStatus playerStatus in _playerList)
         {
             playerStatus.PlayerResting();
             playerStatus.ResetStats();
             playerStatus.Spawn(_spawnPoints[GetSpawnIndex()]);
-            playerStatus.PlayerLives = maxLives;
+            playerStatus.PlayerLives = _maxLives;
 
-            UIUpdatePlayerLives(playerStatus.playerIndex);
+            _controlCam.AddTrackingGameObject(playerStatus.playerGO);
+
+            UIUpdatePlayerLives(playerStatus.PlayerIndex);
         }
     }
 
     public void AddPlayerToList(GameObject newPlayer)
     {
         // Create a new playerStatus and add to the _playerList
-        PlayerStatus newPlayerStatus = new PlayerStatus(newPlayer, maxLives, _playerCount, _playerCount);
+        PlayerStatus newPlayerStatus = new PlayerStatus(newPlayer, _maxLives, _playerCount, _playerCount);
 
         _playerList.Add(newPlayerStatus);
 
@@ -192,9 +194,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // check if already in game? Disable inputs in another way ?
-        Debug.Log(playerInput);
-        Debug.Log(playerInput.gameObject);
+        // check if already in game? Disable inputs in another way ? - Handeled by keeping the game object in scene
+        //Debug.Log(playerInput);
+        //Debug.Log(playerInput.gameObject);
 
         if (_playerCount == 0)
         {
@@ -209,7 +211,7 @@ public class GameManager : MonoBehaviour
             {
                 playerStatus.Spawn(_spawnPoints[GetSpawnIndex()]);
 
-                UIUpdatePlayerLives(playerStatus.playerIndex);
+                UIUpdatePlayerLives(playerStatus.PlayerIndex);
                 UIUpdatePlayerSprites();
             }
         }
@@ -249,7 +251,7 @@ public class GameManager : MonoBehaviour
             {
                 playerStatus.PlayerLives -= 1;
 
-                UIUpdatePlayerLives(playerStatus.playerIndex);
+                UIUpdatePlayerLives(playerStatus.PlayerIndex);
 
                 //Debug.Log("player life left : " + playerStatus.PlayerLives);
                 if (playerStatus.PlayerLives > 0)
@@ -259,7 +261,7 @@ public class GameManager : MonoBehaviour
                     playerStatus.Spawn(_spawnPoints[spawnIndex]); // Spawn also calls player Active
                     
                     _controlCam.AddTrackingGameObject(playerStatus.playerGO);
-                    UIUpdatePlayerLives(playerStatus.playerIndex);
+                    UIUpdatePlayerLives(playerStatus.PlayerIndex);
                 }
                 else
                 {
@@ -267,7 +269,7 @@ public class GameManager : MonoBehaviour
                     playerStatus.PlayerResting(); // disable player
                     
                     _controlCam.RemoveTrackingGameObject(playerStatus.playerGO);
-                    UIplayerDead(playerStatus.playerIndex);
+                    UIplayerDead(playerStatus.PlayerIndex);
                 }
             }
         }
@@ -277,18 +279,18 @@ public class GameManager : MonoBehaviour
     // UI Stuff
     private void UIPlayerCount(int nrOfPlayers)
     {
-        Debug.Log("Updating Player Count UI");
+        //Debug.Log("Updating Player Count UI");
         for (int i = 0; i < 4; i++) 
         {
-            Debug.Log($"Updating Player Count UI {i}");
+            //Debug.Log($"Updating Player Count UI {i}");
             if (i <= nrOfPlayers)
             {
-                Debug.Log($"{i} : true");
+                //Debug.Log($"{i} : true");
                 uiPlayerArray[i].gameObject.SetActive(true);
             }
             else
             {
-                Debug.Log($"{i} : false");
+                //Debug.Log($"{i} : false");
                 uiPlayerArray[i].gameObject.SetActive(false);
             }
         }
@@ -296,14 +298,15 @@ public class GameManager : MonoBehaviour
 
     private void UIUpdatePlayerLives(int index)
     {
+        //print(index + "  is updating Life  to " + _playerList[index].PlayerLives);
         uiPlayerArray[index].SetAlive();
-        uiPlayerArray[index].SetMaxLife(maxLives);
+        uiPlayerArray[index].SetMaxLife(_maxLives);
         uiPlayerArray[index].SetCurrentLife(_playerList[index].PlayerLives);
 
     }
     private void UIplayerDead(int index)
     {
-        uiPlayerArray[index].SetMaxLife(maxLives);
+        uiPlayerArray[index].SetMaxLife(_maxLives);
         uiPlayerArray[index].SetCurrentLife(_playerList[index].PlayerLives);
         uiPlayerArray[index].SetDeath();
     }

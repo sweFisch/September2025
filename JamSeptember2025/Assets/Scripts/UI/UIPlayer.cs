@@ -29,7 +29,7 @@ public class UIPlayer : MonoBehaviour
 
         for (int i = _livesBox.childCount; i < nrOfLives; i++) 
         {
-            print("making box??");
+            //print("making box??");
             Instantiate(_livesImage, _livesBox);
         }
     }
@@ -37,9 +37,9 @@ public class UIPlayer : MonoBehaviour
 
     public void SetCurrentLife(int currentLife)
     {
-        Transform[] allLives = _livesBox.GetComponentsInChildren<Transform>();
+        Transform[] allLives = _livesBox.GetComponentsInChildren<Transform>(true);
 
-        print(allLives.Length); // TODO
+        //print(allLives.Length); // TODO
 
         currentLife = Mathf.Clamp(currentLife, 0, allLives.Length);
 
@@ -60,7 +60,7 @@ public class UIPlayer : MonoBehaviour
     {
         // Set blood puddle texture
         // Set player UI status to Dead
-        Debug.Log("Player UI object set death");
+        //Debug.Log("Player UI object set death");
         deathSprite.gameObject.SetActive(true);
     }
 

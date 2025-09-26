@@ -580,15 +580,9 @@ MonoBehaviour:
   - {fileID: 998899653492521830}
   - {fileID: 1177665398582418007}
   - {fileID: 2182723759631179738}
-  maxLives: 3
-  controlCam: {fileID: 2468910388597754901}
-  spawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _maxLives: 3
+  _controlCam: {fileID: 0}
+  _spawnPoints: []
 --- !u!114 &2809878153309067267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,8 +640,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlCam
   gameObjectList: []
-  _bufferAroundObjects: 4
-  _smoothTime: 0.3
+  _bufferAroundObjects: 8
+  _smoothTime: 0.2
+  _bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1 &1303110005945508920
 GameObject:
   m_ObjectHideFlags: 0
