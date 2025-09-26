@@ -14,10 +14,14 @@ public class Bullet : MonoBehaviour
     public void Fire(float playerVel)
     {
         rb = GetComponent<Rigidbody2D>();
-        //rb.AddForce(Vector3.right * (bulletVel + playerVel) );
-        rb.linearVelocity = new Vector2(Mathf.Sign(transform.right.x) * (bulletVel + playerVel), 0f);
-        //print(playerVel);
-        //Debug.DrawLine(transform.position, transform.position + (Vector3)rb.linearVelocity,Color.red,5f);
+        //Vector2 vector = new Vector2(Mathf.Sign(transform.right.x) * (), 0);
+        ////Vector2 vector = new Vector2(Mathf.Sign(transform.right.x) * (bulletVel + playerVel), Mathf.Sign(transform.right.z));
+        ////float newAngle = Mathf.Atan2(vector.y, vector.x) + transform.rotation.z * Mathf.Deg2Rad;
+        ////vector = new Vector2(Mathf.Cos(newAngle), Mathf.Sin(newAngle));
+        //Vector2 newVector = Rotate(vector, transform.rotation.z);
+
+        rb.linearVelocity = (transform.right) * (bulletVel + playerVel);
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

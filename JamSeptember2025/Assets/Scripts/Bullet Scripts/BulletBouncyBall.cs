@@ -11,13 +11,11 @@ public class BulletBouncyBall : MonoBehaviour
 
     public void Fire(float playerVel)
     {
-        rb = GetComponent<Rigidbody2D>();
-        //rb.AddForce(Vector3.right * (bulletVel + playerVel) );
-        rb.linearVelocity = new Vector2(Mathf.Sign(transform.right.x) * (bulletVel + playerVel), 0.0f);
-        //print(playerVel);
-        //Debug.DrawLine(transform.position, transform.position + (Vector3)rb.linearVelocity,Color.red,5f);
-        //Transform.Rotate();
+        rb.linearVelocity = (transform.right) * (bulletVel + playerVel);
+
     }
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
