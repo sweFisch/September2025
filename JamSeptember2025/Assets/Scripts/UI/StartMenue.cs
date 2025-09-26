@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class StartMenue : MonoBehaviour
@@ -8,27 +9,38 @@ public class StartMenue : MonoBehaviour
     // Update is called once per frame
 
 
+    private void Update()
+    {
+        if (Keyboard.current[Key.Digit1].wasPressedThisFrame)
+        {
+            SceneManager.LoadScene(1);
+        }
+        if (Keyboard.current[Key.Digit2].wasPressedThisFrame)
+        {
+            SceneManager.LoadScene(2);
+        }
+    }
+
+    public void StartButton()
+    {
+        int sceneToLoad = Random.Range(1, 2);
+        SceneManager.LoadScene(sceneToLoad);
+
+    }
+
+    public void NextLevel(){
 
 
-public void StartButton(){
+    }
 
-    SceneManager.LoadScene(0);
+    public void ExitGame(){
 
-}
+    Application.Quit();
 
-public void NextLevel(){
+    #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #endif
 
-
-}
-
-public void ExitGame(){
-
-Application.Quit();
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-        #endif
-
-}
+    }
 
 }

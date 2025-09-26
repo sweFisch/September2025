@@ -158,8 +158,9 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (Keyboard.current[Key.Escape].wasPressedThisFrame)
+        if (Keyboard.current[Key.Escape].wasPressedThisFrame || Keyboard.current[Key.Digit0].wasPressedThisFrame)
         {
+            Debug.Log("Escape Pressed");
             SceneManager.LoadScene(0);
         }
     }
