@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Robs-TestScenes/JunkSceneR.unity
+    path: Assets/Scenes/MainMenue.unity
     guid: 42fa1c36bc6f01d28bf728a7a8574b59
   - enabled: 1
     path: Assets/Scenes/Game_Levels/DragonLair.unity

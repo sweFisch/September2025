@@ -12,7 +12,10 @@ public class ControlCam : MonoBehaviour
     public float _bufferAroundObjects = 8f;
 
     public float _smoothTime = 0.2f;
+    public float _smoothTimeSize = 0.3f;
     private Vector3 _velocity = Vector3.zero;
+
+    private float _sizeVelocity;
 
     //Bounds _levelBounds;
     //[SerializeField] BoxCollider2D _boxColliderBounds;
@@ -125,7 +128,7 @@ public class ControlCam : MonoBehaviour
         var center = _bounds.center + new Vector3(0, 0, -10);
         Vector3 preferedCameraPos = center;
 
-
+        float targetSize = _bounds.extents.y;
         if (_bounds.extents.x > _bounds.extents.y * Camera.main.aspect)
         {
             Camera.main.orthographicSize = _bounds.extents.x / Camera.main.aspect;
@@ -134,6 +137,7 @@ public class ControlCam : MonoBehaviour
         {
             Camera.main.orthographicSize = _bounds.extents.y;
         }
+        Camera.main.orthographicSize = Mathf.SmoothDamp(Camera.main.orthographicSize, targetSize, ref _sizeVelocity, _smoothTimeSize);
 
 
         // Camera Shake

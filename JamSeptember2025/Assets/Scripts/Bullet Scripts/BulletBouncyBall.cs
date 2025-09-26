@@ -26,12 +26,13 @@ public class BulletBouncyBall : MonoBehaviour
             Destroy(gameObject);
         }
     }
- void Update() {
-        if (aliveTime <= 0){
+    void Update() 
+    {
+        if (aliveTime <= 0)
+        {
             Destroy(gameObject);
         
+        }
+        aliveTime -= Time.deltaTime;
     }
-    aliveTime -= Time.deltaTime;
-
-}
 }

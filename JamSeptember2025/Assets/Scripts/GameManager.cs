@@ -163,6 +163,11 @@ public class GameManager : MonoBehaviour
             Debug.Log("Escape Pressed");
             SceneManager.LoadScene(0);
         }
+
+        if (Keyboard.current[Key.Backspace].wasPressedThisFrame)
+        {
+            
+        }
     }
 
     private void RestartCurrentLevel()
